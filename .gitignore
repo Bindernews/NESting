@@ -1,3 +1,7 @@
+# Ignore build dirs
+build/
+build-ninja/
+
 # Prerequisites
 *.d
 

@@ -116,10 +116,16 @@
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugPaths.cpp">
       <Filter>IPlug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.cpp">
-      <Filter>IPlug\VST3</Filter>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.cpp">
+      <Filter>IPlug\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust_arch.cpp">
+      <Filter>IPlug\Extras</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ProcessorBase.cpp">
+      <Filter>IPlug\VST3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.cpp">
       <Filter>IPlug\VST3</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\commoniids.cpp">
@@ -128,10 +134,16 @@
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG.cpp">
       <Filter>IGraphics\Drawing</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG_src.cpp">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsCairo.cpp">
       <Filter>IGraphics\Drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice.cpp">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice_src.cpp">
       <Filter>IGraphics\Drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsNanoVG.cpp">
@@ -139,12 +151,6 @@
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.cpp">
       <Filter>IGraphics\Drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\IGraphicsEditorDelegate.cpp">
       <Filter>IGraphics</Filter>
@@ -188,24 +194,6 @@
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\IGraphics_select.h">
       <Filter>IGraphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG.h">
-      <Filter>IGraphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG_src.h">
-      <Filter>IGraphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsCairo.h">
-      <Filter>IGraphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice.h">
-      <Filter>IGraphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice_src.h">
-      <Filter>IGraphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsNanoVG.h">
-      <Filter>IGraphics\Drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Platforms\IGraphicsLinux.h">
       <Filter>IGraphics\Platform</Filter>
@@ -281,18 +269,6 @@
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Controls\ITextEntryControl.h">
       <Filter>IGraphics\Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\ControlRamp.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\SynthVoice.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.h">
-      <Filter>IPlug\Extras\Synth</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Controls\IPopupMenuControl.h">
       <Filter>IGraphics\Controls</Filter>
@@ -372,11 +348,11 @@
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugPaths.h">
       <Filter>IPlug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.h">
-      <Filter>IPlug\VST3</Filter>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust.h">
+      <Filter>IPlug\Extras</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_Common.h">
-      <Filter>IPlug\VST3</Filter>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.h">
+      <Filter>IPlug\Extras</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_ControllerBase.h">
       <Filter>IPlug\VST3</Filter>
@@ -390,6 +366,30 @@
     <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_View.h">
       <Filter>IPlug\VST3</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3.h">
+      <Filter>IPlug\VST3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IPlug\VST3\IPlugVST3_Common.h">
+      <Filter>IPlug\VST3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsAGG_src.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsCairo.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsLice_src.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsNanoVG.h">
+      <Filter>IGraphics\Drawing</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.h">
       <Filter>IGraphics\Drawing</Filter>
     </ClInclude>
@@ -402,7 +402,6 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\ISender.h">
       <Filter>IGraphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\NESting_DSP.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
@@ -431,12 +430,6 @@
     </Filter>
     <Filter Include="IPlug\VST3\VST3_SDK">
       <UniqueIdentifier>{8457d487-cc95-4187-8e99-6facd217dbb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IPlug\Extras">
-      <UniqueIdentifier>{bb278ea5-049c-488d-bfef-34ffc6054ad9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IPlug\Extras\Synth">
-      <UniqueIdentifier>{fddce9c1-111e-4057-b82b-11a032d799d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="IPlug\VST3\VST3_SDK\public.sdk">
       <UniqueIdentifier>{83eddda9-c0ea-4a0b-8284-96f69457fe1b}</UniqueIdentifier>
@@ -467,6 +460,9 @@
     </Filter>
     <Filter Include="IPlug\VST3\VST3_SDK\plugininterfaces\base">
       <UniqueIdentifier>{5f06b03e-5093-46c0-9513-efb4e494c857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IPlug\Extras">
+      <UniqueIdentifier>{6b872b1f-eaad-4358-997e-504b758315f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

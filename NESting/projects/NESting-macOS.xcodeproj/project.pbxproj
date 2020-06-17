@@ -50,22 +50,6 @@
 		4F0848292015129A00F9E881 /* IPlugAAX_Parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0848252015129300F9E881 /* IPlugAAX_Parameters.cpp */; };
 		4F0D965C23099F6900BFDED0 /* IPlugProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F61A8202807B9003F2573 /* IPlugProcessor.cpp */; };
 		4F10D3D9203A6719003EF82A /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F10D3D7203A6719003EF82A /* RtMidi.cpp */; settings = {COMPILER_FLAGS = "-Wno-shorten-64-to-32"; }; };
-		4F11D40823201476003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D40923201476003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D40A23201476003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D40B23201476003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D40C23201477003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D40D23201477003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D40E23201477003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D40F23201477003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D41023201478003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D41123201478003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D41223201479003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D41323201479003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D4182320147B003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D4192320147B003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
-		4F11D41A23201482003E1647 /* VoiceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E673F21C5614C005991A9 /* VoiceAllocator.cpp */; };
-		4F11D41B23201482003E1647 /* MidiSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E674221C5614C005991A9 /* MidiSynth.cpp */; };
 		4F1A527B205D910000CF2908 /* IPlugVST2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A527A205D910000CF2908 /* IPlugVST2.cpp */; };
 		4F1A527E205D911A00CF2908 /* IPlugVST3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A527C205D911900CF2908 /* IPlugVST3.cpp */; };
 		4F1A5282205D913300CF2908 /* IPlugAPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A5280205D913300CF2908 /* IPlugAPP.cpp */; };
@@ -307,6 +291,20 @@
 		4FD16D4013B635A0001D0217 /* swell-misc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D3F13B635A0001D0217 /* swell-misc.mm */; };
 		4FD16D4213B635AB001D0217 /* swell-wnd.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D4113B635AB001D0217 /* swell-wnd.mm */; settings = {COMPILER_FLAGS = "-Wno-unreachable-code"; }; };
 		4FD16D4413B635B2001D0217 /* swell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D4313B635B2001D0217 /* swell.cpp */; };
+		4FD3B6312320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6322320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6332320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6342320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6352320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6362320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B6372320118D007EE42B /* libfaust.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; };
+		4FD3B63F23201237007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B64123201258007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B64323201269007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B64523201277007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B6472320127F007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B64923201288007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FD3B64B23201291007EE42B /* libfaust.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FD3B6302320118D007EE42B /* libfaust.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4FD52131202A5B9B00A4D22A /* IPlugAU_view_factory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD5212E202A5B9B00A4D22A /* IPlugAU_view_factory.mm */; };
 		4FD52133202A5B9B00A4D22A /* IPlugAU.r in Rez */ = {isa = PBXBuildFile; fileRef = 4FD52130202A5B9B00A4D22A /* IPlugAU.r */; };
 		4FD52136202A5BD000A4D22A /* dfx-au-utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FD52134202A5BD000A4D22A /* dfx-au-utilities.c */; };
@@ -316,6 +314,15 @@
 		4FDAC0ED207D76C600299363 /* IPlugTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDAC0E6207D76C600299363 /* IPlugTimer.cpp */; };
 		4FDAC0EE207D76C600299363 /* IPlugTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDAC0E6207D76C600299363 /* IPlugTimer.cpp */; };
 		4FF0A83221BE708700B2C9D1 /* swell-gdi.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D0B13B634BF001D0217 /* swell-gdi.mm */; };
+		4FF262A52320079D0076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262A62320079D0076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262A72320079E0076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262A82320079E0076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262A92320079F0076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262AA232007A00076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262AB232007A10076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262AC232007A40076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
+		4FF262AD232007A50076F5D4 /* IPlugFaustGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5369D320C446430089212E /* IPlugFaustGen.cpp */; };
 		4FF3205820B2BFAB00269268 /* IPlugPaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF3204F20B2BFAB00269268 /* IPlugPaths.h */; };
 		4FFBB90520863B0E00DDD0E7 /* baseiids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8158BF205D50EB00393585 /* baseiids.cpp */; };
 		4FFBB90620863B0E00DDD0E7 /* IPlugTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDAC0E6207D76C600299363 /* IPlugTimer.cpp */; };
@@ -453,6 +460,76 @@
 			name = "Embed AUv3 App Extension";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4FD3B63E23201230007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B63F23201237007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B64023201254007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B64123201258007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B64223201266007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B64323201269007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B64423201272007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B64523201277007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B6462320127C007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B6472320127F007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B64823201286007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B64923201288007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD3B64A2320128F007EE42B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FD3B64B23201291007EE42B /* libfaust.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -489,7 +566,6 @@
 		4F10D3D3203A6711003EF82A /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = ..\..\iPlug2/Dependencies/IPlug/RTAudio/RtAudio.cpp; sourceTree = "<group>"; };
 		4F10D3D6203A6719003EF82A /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = ..\..\iPlug2/Dependencies/IPlug/RTMidi/RtMidi.h; sourceTree = "<group>"; };
 		4F10D3D7203A6719003EF82A /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtMidi.cpp; path = ..\..\iPlug2/Dependencies/IPlug/RTMidi/RtMidi.cpp; sourceTree = "<group>"; };
-		4F11D4072320145E003E1647 /* NESting_DSP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NESting_DSP.h; path = ../NESting_DSP.h; sourceTree = "<group>"; };
 		4F1A5279205D90FF00CF2908 /* IPlugVST2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPlugVST2.h; path = ..\..\iPlug2/IPlug/VST2/IPlugVST2.h; sourceTree = "<group>"; };
 		4F1A527A205D910000CF2908 /* IPlugVST2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IPlugVST2.cpp; path = ..\..\iPlug2/IPlug/VST2/IPlugVST2.cpp; sourceTree = "<group>"; };
 		4F1A527C205D911900CF2908 /* IPlugVST3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; name = IPlugVST3.cpp; path = ..\..\iPlug2/IPlug/VST3/IPlugVST3.cpp; sourceTree = "<group>"; tabWidth = 2; };
@@ -798,6 +874,8 @@
 		4FD16D4513B635C8001D0217 /* swellappmain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = swellappmain.h; path = ..\..\iPlug2/WDL/swell/swellappmain.h; sourceTree = SOURCE_ROOT; };
 		4FD16D4613B635C8001D0217 /* swellappmain.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = swellappmain.mm; path = ..\..\iPlug2/WDL/swell/swellappmain.mm; sourceTree = SOURCE_ROOT; };
 		4FD290A8137C34D700CEBE7E /* NESting.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NESting.icns; path = ../resources/NESting.icns; sourceTree = "<group>"; };
+		4FD3B62D232009C5007EE42B /* FaustCode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FaustCode.hpp; path = ../FaustCode.hpp; sourceTree = "<group>"; };
+		4FD3B6302320118D007EE42B /* libfaust.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfaust.dylib; path = ..\..\iPlug2/Dependencies/Build/mac/lib/libfaust.dylib; sourceTree = "<group>"; };
 		4FD5212E202A5B9B00A4D22A /* IPlugAU_view_factory.mm */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.objcpp; name = IPlugAU_view_factory.mm; path = ..\..\iPlug2/IPlug/AUv2/IPlugAU_view_factory.mm; sourceTree = "<group>"; tabWidth = 2; };
 		4FD52130202A5B9B00A4D22A /* IPlugAU.r */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.rez; name = IPlugAU.r; path = ..\..\iPlug2/IPlug/AUv2/IPlugAU.r; sourceTree = "<group>"; tabWidth = 2; };
 		4FD52134202A5BD000A4D22A /* dfx-au-utilities.c */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.c; name = "dfx-au-utilities.c"; path = "..\..\iPlug2/IPlug/AUv2/dfx-au-utilities.c"; sourceTree = "<group>"; tabWidth = 2; };
@@ -816,6 +894,7 @@
 		4FF016F5134E14E2001447BA /* ptrlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ptrlist.h; path = ..\..\iPlug2/WDL/ptrlist.h; sourceTree = SOURCE_ROOT; };
 		4FF016F6134E14E2001447BA /* wdlstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wdlstring.h; path = ..\..\iPlug2/WDL/wdlstring.h; sourceTree = SOURCE_ROOT; };
 		4FF01719134E153A001447BA /* heapbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = heapbuf.h; path = ..\..\iPlug2/WDL/heapbuf.h; sourceTree = SOURCE_ROOT; };
+		4FF262AE232008200076F5D4 /* NESting.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; name = NESting.dsp; path = ../NESting.dsp; sourceTree = "<group>"; };
 		4FF3204F20B2BFAB00269268 /* IPlugPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = IPlugPaths.h; path = ..\..\iPlug2/IPlug/IPlugPaths.h; sourceTree = "<group>"; tabWidth = 2; };
 		4FF7B0D4156A825000E6CB12 /* common-mac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "common-mac.xcconfig"; path = "..\..\iPlug2/common-mac.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4FF7B0F3156A831000E6CB12 /* AAXLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AAXLibrary.xcodeproj; path = ..\..\iPlug2/Dependencies/IPlug/AAX_SDK/Libs/AAXLibrary/MacBuild/AAXLibrary.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -839,6 +918,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6312320118D007EE42B /* libfaust.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +934,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6372320118D007EE42B /* libfaust.dylib in Frameworks */,
 				4F3EE1E7231438D000004786 /* AUv3Framework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -862,6 +943,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6362320118D007EE42B /* libfaust.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,6 +951,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6322320118D007EE42B /* libfaust.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,6 +959,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6342320118D007EE42B /* libfaust.dylib in Frameworks */,
 				4F815999205D525A00393585 /* libAAXLibrary_libcpp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -884,6 +968,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6332320118D007EE42B /* libfaust.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,6 +983,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD3B6352320118D007EE42B /* libfaust.dylib in Frameworks */,
 				4FC3EFD42086C49D00BD11FA /* NEStingVST3Controller.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -908,10 +994,12 @@
 		089C166AFE841209C02AAC07 /* IPlugExample */ = {
 			isa = PBXGroup;
 			children = (
+				4FD3B6302320118D007EE42B /* libfaust.dylib */,
 				52FBBED30D0CF143001C8B8A /* config.h */,
+				4FD3B62D232009C5007EE42B /* FaustCode.hpp */,
 				4F3862EE2014BBEC0009F402 /* NESting.h */,
 				4F3862ED2014BBEC0009F402 /* NESting.cpp */,
-				4F11D4072320145E003E1647 /* NESting_DSP.h */,
+				4FF262AE232008200076F5D4 /* NESting.dsp */,
 				4F9313232315CA1100DB2383 /* README.md */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				32C88E010371C26100C91783 /* Other Sources */,
@@ -1743,6 +1831,7 @@
 				4F20EEC9132C69FE0030E34C /* Resources */,
 				4F20EECA132C69FE0030E34C /* Sources */,
 				4F20EF2C132C69FE0030E34C /* Frameworks */,
+				4FD3B64023201254007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1762,6 +1851,7 @@
 				4F39075C2013EBA300DDA490 /* Sources */,
 				4F39075D2013EBA300DDA490 /* Frameworks */,
 				4F39075E2013EBA300DDA490 /* Resources */,
+				4FD3B64A2320128F007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1783,6 +1873,7 @@
 				4F3AE1DA12C0E5E2001FD7A4 /* Rez */,
 				4F744D4C14005ADA002FAD90 /* Run Script - clear_audiounit_caches.sh */,
 				4FBDD26520A319580054B111 /* Frameworks */,
+				4FD3B64423201272007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1841,6 +1932,7 @@
 				4F9828AF140A9EB700F3FCC1 /* Resources */,
 				4F9828B5140A9EB700F3FCC1 /* Sources */,
 				4F9828D7140A9EB700F3FCC1 /* Frameworks */,
+				4FD3B64223201266007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1860,6 +1952,7 @@
 				4FB600151567CB0A0020189A /* Resources */,
 				4FB600171567CB0A0020189A /* Sources */,
 				4FB6002A1567CB0A0020189A /* Frameworks */,
+				4FD3B6462320127C007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1896,6 +1989,7 @@
 				4FBCC1B21FD5AE8500EFE550 /* Run Script - prepare_resources-mac.py */,
 				4FD16A0513B63081001D0217 /* Resources */,
 				4FD16A0613B63081001D0217 /* Sources */,
+				4FD3B63E23201230007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1914,6 +2008,7 @@
 				4FFBB8FA20863B0E00DDD0E7 /* Resources */,
 				4FFBB90420863B0E00DDD0E7 /* Sources */,
 				4FFBB93620863B0E00DDD0E7 /* Frameworks */,
+				4FD3B64823201286007EE42B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1932,6 +2027,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					4F20EEC8132C69FE0030E34C = {
@@ -1977,7 +2073,6 @@
 						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
 					};
 					4FD16A0813B63081001D0217 = {
-						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
@@ -2285,14 +2380,13 @@
 			files = (
 				4FDAC0EB207D76C600299363 /* IPlugTimer.cpp in Sources */,
 				4F63696E20A463090022C370 /* IControls.cpp in Sources */,
+				4FF262A62320079D0076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F03A5AD20A4621100EBDFFB /* IGraphics.cpp in Sources */,
 				4F5F344220C0226200487201 /* IPlugPaths.mm in Sources */,
 				4F6369EC20A466470022C370 /* IControl.cpp in Sources */,
 				4FB1F58A20E4B005004157C8 /* IGraphicsMac.mm in Sources */,
 				4FA9F80521F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
 				4FCE29D821D6ED70004BCBA1 /* ITextEntryControl.cpp in Sources */,
-				4F11D40A23201476003E1647 /* VoiceAllocator.cpp in Sources */,
-				4F11D40B23201476003E1647 /* MidiSynth.cpp in Sources */,
 				4F9A82F8213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4F1A527B205D910000CF2908 /* IPlugVST2.cpp in Sources */,
 				4F8C10E120BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
@@ -2312,6 +2406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF262AB232007A10076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F78BE3222E7429B00AD537E /* IPlugAUv3Appex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2331,7 +2426,6 @@
 				4F993F7423055C96000313AF /* IPlugProcessor.cpp in Sources */,
 				4F8C10E320BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
 				4F6FD2B422675B6300FC59E6 /* IGraphicsCoreText.mm in Sources */,
-				4F11D40E23201477003E1647 /* VoiceAllocator.cpp in Sources */,
 				4F9A82FA213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4FDAC0ED207D76C600299363 /* IPlugTimer.cpp in Sources */,
 				4F78D94513B63BA50032E0F3 /* IPlugAPIBase.cpp in Sources */,
@@ -2343,7 +2437,7 @@
 				4F78D95C13B63BA50032E0F3 /* IPlugParameter.cpp in Sources */,
 				4FB1F58C20E4B006004157C8 /* IGraphicsMac.mm in Sources */,
 				4F3862F22014BBEC0009F402 /* NESting.cpp in Sources */,
-				4F11D40F23201477003E1647 /* MidiSynth.cpp in Sources */,
+				4FF262A82320079E0076F5D4 /* IPlugFaustGen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2354,6 +2448,7 @@
 				4F3EE1C2231438D000004786 /* IPlugProcessor.cpp in Sources */,
 				4F3EE1C3231438D000004786 /* RtMidi.cpp in Sources */,
 				4F3EE1C4231438D000004786 /* IGraphicsLice_src.mm in Sources */,
+				4FF262AD232007A50076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F3EE1C5231438D000004786 /* IGraphicsNanoVG_src.m in Sources */,
 				4F3EE1C6231438D000004786 /* IControl.cpp in Sources */,
 				4F3EE1C7231438D000004786 /* swell-dlg.mm in Sources */,
@@ -2376,7 +2471,6 @@
 				4F3EE1D8231438D000004786 /* IPlugAPP_dialog.cpp in Sources */,
 				4F3EE1D9231438D000004786 /* RtAudio.cpp in Sources */,
 				4F3EE1DA231438D000004786 /* IGraphicsCoreText.mm in Sources */,
-				4F11D41B23201482003E1647 /* MidiSynth.cpp in Sources */,
 				4F3EE1DB231438D000004786 /* IPlugAPP_main.cpp in Sources */,
 				4F3EE1DC231438D000004786 /* IControls.cpp in Sources */,
 				4F3EE1DD231438D000004786 /* IGraphicsMac.mm in Sources */,
@@ -2384,7 +2478,6 @@
 				4F3EE1DF231438D000004786 /* IPopupMenuControl.cpp in Sources */,
 				4F3EE1E0231438D000004786 /* IPlugAPIBase.cpp in Sources */,
 				4F3EE1E1231438D000004786 /* IPlugPluginBase.cpp in Sources */,
-				4F11D41A23201482003E1647 /* VoiceAllocator.cpp in Sources */,
 				4F3EE1E2231438D000004786 /* IGraphicsEditorDelegate.cpp in Sources */,
 				4F3EE1E3231438D000004786 /* swell-gdi.mm in Sources */,
 				4F3EE1E4231438D000004786 /* IPlugParameter.cpp in Sources */,
@@ -2398,14 +2491,13 @@
 			files = (
 				4F78BE1422E7406D00AD537E /* NESting.h in Sources */,
 				4F0D965C23099F6900BFDED0 /* IPlugProcessor.cpp in Sources */,
-				4F11D4182320147B003E1647 /* VoiceAllocator.cpp in Sources */,
 				4F78BE1522E7406D00AD537E /* NESting.cpp in Sources */,
 				4F78BE1622E7406D00AD537E /* IGraphicsMac_view.mm in Sources */,
 				4F78BE1722E7406D00AD537E /* IGraphicsMac.mm in Sources */,
-				4F11D4192320147B003E1647 /* MidiSynth.cpp in Sources */,
 				4F78BE1822E7406D00AD537E /* IGraphicsCoreText.mm in Sources */,
 				4F78BE1922E7406D00AD537E /* ITextEntryControl.cpp in Sources */,
 				4F78BE1A22E7406D00AD537E /* IPopupMenuControl.cpp in Sources */,
+				4FF262AC232007A40076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F78BE1B22E7406D00AD537E /* IControls.cpp in Sources */,
 				4F78BE1C22E7406D00AD537E /* IGraphicsLice_src.mm in Sources */,
 				4F78BE1D22E7406D00AD537E /* IGraphicsAGG_src.mm in Sources */,
@@ -2452,7 +2544,6 @@
 				4F6369ED20A466470022C370 /* IControl.cpp in Sources */,
 				4F35DEAF207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
 				4F81591E205D50EB00393585 /* macmain.cpp in Sources */,
-				4F11D40C23201477003E1647 /* VoiceAllocator.cpp in Sources */,
 				4F993F7323055C96000313AF /* IPlugProcessor.cpp in Sources */,
 				4F815986205D50EB00393585 /* flock.cpp in Sources */,
 				4FCE29D921D6ED70004BCBA1 /* ITextEntryControl.cpp in Sources */,
@@ -2471,6 +2562,7 @@
 				4F81598C205D51CF00393585 /* vstsinglecomponenteffect.cpp in Sources */,
 				4F815984205D50EB00393585 /* updatehandler.cpp in Sources */,
 				4F815990205D51F000393585 /* vstcomponent.cpp in Sources */,
+				4FF262A72320079E0076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F815981205D50EB00393585 /* fstreamer.cpp in Sources */,
 				4F815996205D51F000393585 /* vstrepresentation.cpp in Sources */,
 				4F815985205D50EB00393585 /* fcondition.cpp in Sources */,
@@ -2480,7 +2572,6 @@
 				4F1A527E205D911A00CF2908 /* IPlugVST3.cpp in Sources */,
 				4F815988205D50EB00393585 /* coreiids.cpp in Sources */,
 				4F815993205D51F000393585 /* vstnoteexpressiontypes.cpp in Sources */,
-				4F11D40D23201477003E1647 /* MidiSynth.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2490,14 +2581,13 @@
 			files = (
 				4F9A82FB213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4F993F7523055C97000313AF /* IPlugProcessor.cpp in Sources */,
-				4F11D41023201478003E1647 /* VoiceAllocator.cpp in Sources */,
 				4FDAC0EE207D76C600299363 /* IPlugTimer.cpp in Sources */,
 				4F8C10E420BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
 				4F6369E120A464BB0022C370 /* IGraphicsNanoVG_src.m in Sources */,
-				4F11D41123201478003E1647 /* MidiSynth.cpp in Sources */,
 				4F63697120A463090022C370 /* IControls.cpp in Sources */,
 				4FB6001A1567CB0A0020189A /* IPlugAPIBase.cpp in Sources */,
 				4FA9F80821F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
+				4FF262A92320079F0076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F6369EF20A466470022C370 /* IControl.cpp in Sources */,
 				4F03A5B020A4621100EBDFFB /* IGraphics.cpp in Sources */,
 				4F35DEB1207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
@@ -2547,6 +2637,7 @@
 				B885CBC52304AE7300D73128 /* IPlugProcessor.cpp in Sources */,
 				4F10D3D9203A6719003EF82A /* RtMidi.cpp in Sources */,
 				4FA9F80421F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
+				4FF262A52320079D0076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4F6369DD20A464BB0022C370 /* IGraphicsNanoVG_src.m in Sources */,
 				4F6369EB20A466470022C370 /* IControl.cpp in Sources */,
 				4FD16D0513B634AA001D0217 /* swell-dlg.mm in Sources */,
@@ -2569,7 +2660,6 @@
 				4F2EA978203A50EA008E4850 /* IPlugAPP_dialog.cpp in Sources */,
 				4FAFFE5821495A4800A6E72D /* RtAudio.cpp in Sources */,
 				4F6FD2B122675B6300FC59E6 /* IGraphicsCoreText.mm in Sources */,
-				4F11D40923201476003E1647 /* MidiSynth.cpp in Sources */,
 				4F690C9B203A345100A4A13E /* IPlugAPP_main.cpp in Sources */,
 				4F63696D20A463090022C370 /* IControls.cpp in Sources */,
 				4FB1F58920E4B004004157C8 /* IGraphicsMac.mm in Sources */,
@@ -2577,7 +2667,6 @@
 				4F9A82F7213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4F78D90B13B63BA50032E0F3 /* IPlugAPIBase.cpp in Sources */,
 				4F35DEAD207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
-				4F11D40823201476003E1647 /* VoiceAllocator.cpp in Sources */,
 				4F8C10E020BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
 				4FF0A83221BE708700B2C9D1 /* swell-gdi.mm in Sources */,
 				4F78D91813B63BA50032E0F3 /* IPlugParameter.cpp in Sources */,
@@ -2599,10 +2688,8 @@
 				B8E22A0D220268C4007CBF4C /* IPlugVST3_ProcessorBase.cpp in Sources */,
 				4FFBB90D20863B0E00DDD0E7 /* fdynlib.cpp in Sources */,
 				4FFBB90E20863B0E00DDD0E7 /* memorystream.cpp in Sources */,
-				4F11D41223201479003E1647 /* VoiceAllocator.cpp in Sources */,
 				4FFBB90F20863B0E00DDD0E7 /* IPlugParameter.cpp in Sources */,
 				4FFBB91020863B0E00DDD0E7 /* pluginview.cpp in Sources */,
-				4F11D41323201479003E1647 /* MidiSynth.cpp in Sources */,
 				4FFBB91120863B0E00DDD0E7 /* fstring.cpp in Sources */,
 				4FFBB91320863B0E00DDD0E7 /* vstpresetfile.cpp in Sources */,
 				4FFBB91520863B0E00DDD0E7 /* timer.cpp in Sources */,
@@ -2622,6 +2709,7 @@
 				4FFBB92520863B0E00DDD0E7 /* vstsinglecomponenteffect.cpp in Sources */,
 				4FFBB92620863B0E00DDD0E7 /* updatehandler.cpp in Sources */,
 				4FFBB92820863B0E00DDD0E7 /* vstcomponent.cpp in Sources */,
+				4FF262AA232007A00076F5D4 /* IPlugFaustGen.cpp in Sources */,
 				4FFBB92C20863B0E00DDD0E7 /* fstreamer.cpp in Sources */,
 				4FFBB92D20863B0E00DDD0E7 /* vstrepresentation.cpp in Sources */,
 				4FFBB92E20863B0E00DDD0E7 /* fcondition.cpp in Sources */,
@@ -2852,7 +2940,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST2-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
@@ -2871,7 +2959,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST2-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
@@ -2890,7 +2978,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST2-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
@@ -2926,7 +3014,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2964,7 +3052,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3002,7 +3090,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3027,7 +3115,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I $CA_SDK/AudioUnits/AUPublic/AUBase";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.audiounit.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.audiounit.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = (
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers,
@@ -3055,7 +3143,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I $CA_SDK/AudioUnits/AUPublic/AUBase";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.audiounit.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.audiounit.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = (
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers,
@@ -3083,7 +3171,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I $CA_SDK/AudioUnits/AUPublic/AUBase";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.audiounit.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.audiounit.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = (
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers,
@@ -3113,7 +3201,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3139,7 +3227,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3165,7 +3253,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3216,7 +3304,7 @@
 					"$(EXTRA_LNK_FLAGS)",
 					"$(ALL_FRAMEWORKS)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3Framework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3Framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3272,7 +3360,7 @@
 					"$(EXTRA_LNK_FLAGS)",
 					"$(ALL_FRAMEWORKS)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3Framework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3Framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3328,7 +3416,7 @@
 					"$(EXTRA_LNK_FLAGS)",
 					"$(ALL_FRAMEWORKS)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Vortexel.app.NESting.AUv3Framework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vortexel.app.NESting.AUv3Framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3381,7 +3469,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -3403,7 +3491,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -3425,7 +3513,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -3480,7 +3568,7 @@
 					"$(AAX_SDK)/Libs/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.aax.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.aax.${BINARY_NAME}";
 				SDKROOT = "$(BASE_SDK_MAC)";
 				SKIP_INSTALL = NO;
 				SYMROOT = "../build-mac";
@@ -3552,7 +3640,7 @@
 					"-Xlinker",
 					1500,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.aax.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.aax.${BINARY_NAME}";
 				SDKROOT = "$(BASE_SDK_MAC)";
 				SKIP_INSTALL = NO;
 				SYMROOT = "../build-mac";
@@ -3624,7 +3712,7 @@
 					"-Xlinker",
 					1500,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.aax.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.aax.${BINARY_NAME}";
 				SDKROOT = "$(BASE_SDK_MAC)";
 				SKIP_INSTALL = NO;
 				SYMROOT = "../build-mac";
@@ -3756,7 +3844,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3782,7 +3870,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3808,7 +3896,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.app.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.app.${BINARY_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3831,7 +3919,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -3853,7 +3941,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -3875,7 +3963,7 @@
 					"$(VST3_SDK)",
 				);
 				INFOPLIST_FILE = "../resources/NESting-VST3-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vortexel.vst3.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vortexel.vst3.${BINARY_NAME}";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
 			};

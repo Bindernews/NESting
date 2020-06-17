@@ -145,7 +145,7 @@ def main():
   auv3['CFBundlePackageType'] = "XPC!"
   auv3['NSExtension'] = dict(
   NSExtensionAttributes = dict(
-                               AudioComponentBundle = "com.Vortexel.app." + config['BUNDLE_NAME'] + ".AUv3Framework",
+                               AudioComponentBundle = "com.vortexel.app." + config['BUNDLE_NAME'] + ".AUv3Framework",
                                AudioComponents = [{}]),
 #                               NSExtensionServiceRoleType = "NSExtensionServiceRoleTypeEditor",
   NSExtensionPointIdentifier = NSEXTENSIONPOINTIDENTIFIER,
@@ -201,7 +201,7 @@ def main():
   macOSapp['NSMainNibFile'] = config['BUNDLE_NAME'] + "-macOS-MainMenu"
   macOSapp['LSApplicationCategoryType'] = "public.app-category.music"
   macOSapp['CFBundleIconFile'] = config['BUNDLE_NAME'] + ".icns"
-#  macOSapp['NSMicrophoneUsageDescription'] = 	"This app needs mic access to process audio."
+  macOSapp['NSMicrophoneUsageDescription'] =   "This app needs mic access to process audio."
 
   plistlib.writePlist(macOSapp, plistpath)
 

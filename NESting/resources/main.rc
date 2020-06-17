@@ -207,7 +207,7 @@ BEGIN
             VALUE "FileDescription", "NESting"
             VALUE "InternalName", "NESting"
             VALUE "ProductName", "NESting"
-            VALUE "CompanyName", "Vortexel"
+            VALUE "CompanyName", "vortexel"
             VALUE "LegalCopyright", "Copyright 2019 Acme Inc"
             VALUE "LegalTrademarks", "VST is a trademark of Steinberg Media Technologies GmbH, Audio Unit is a trademark of Apple, Inc."
         END

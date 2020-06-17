@@ -152,6 +152,7 @@
     <Link>
       <AdditionalDependencies>$(APP_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <DelayLoadDLLs>faust.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile />
     <ResourceCompile>
@@ -169,6 +170,7 @@
     <Link>
       <AdditionalDependencies>$(APP_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <DelayLoadDLLs>faust.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile />
     <ResourceCompile>
@@ -308,10 +310,8 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\Platforms\IGraphicsWin.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\APP\IPlugAPP.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\APP\IPlugAPP_host.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\ControlRamp.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\SynthVoice.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.h" />
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust.h" />
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugAPIBase.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugConstants.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugEditorDelegate.h" />
@@ -327,8 +327,9 @@
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugUtilities.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlug_include_in_plug_hdr.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlug_include_in_plug_src.h" />
+    <ClInclude Include="..\APUNoise.hpp" />
+    <ClInclude Include="..\FaustCode.hpp" />
     <ClInclude Include="..\NESting.h" />
-    <ClInclude Include="..\NESting_DSP.h" />
     <ClInclude Include="..\resources\resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -405,8 +406,15 @@
     <ClCompile Include="..\..\iPlug2\IPlug\APP\IPlugAPP_dialog.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\APP\IPlugAPP_host.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\APP\IPlugAPP_main.cpp" />
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.cpp" />
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.cpp" />
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.cpp" />
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust_arch.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugAPIBase.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugParameter.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugPaths.cpp" />

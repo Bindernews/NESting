@@ -83,17 +83,17 @@
     <ClCompile Include="..\..\iPlug2\IGraphics\Controls\IPopupMenuControl.cpp">
       <Filter>IGraphics\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Controls\ITextEntryControl.cpp">
       <Filter>IGraphics\Controls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugPaths.cpp">
       <Filter>IPlug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.cpp">
+      <Filter>IPlug\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust_arch.cpp">
+      <Filter>IPlug\Extras</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.cpp">
       <Filter>IGraphics\Drawing</Filter>
@@ -282,23 +282,17 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\Controls\IVScopeControl.h">
       <Filter>IGraphics\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\ControlRamp.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\SynthVoice.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Controls\ITextEntryControl.h">
       <Filter>IGraphics\Controls</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugPaths.h">
       <Filter>IPlug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust.h">
+      <Filter>IPlug\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.h">
+      <Filter>IPlug\Extras</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.h">
       <Filter>IGraphics\Drawing</Filter>
@@ -309,7 +303,8 @@
     <ClInclude Include="..\..\iPlug2\IGraphics\ISender.h">
       <Filter>IGraphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\NESting_DSP.h" />
+    <ClInclude Include="..\APUNoise.hpp" />
+    <ClInclude Include="..\FaustCode.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
@@ -333,9 +328,6 @@
     <Filter Include="IPlug">
       <UniqueIdentifier>{3bd7f71b-e8ed-4d62-8e22-06c09c5c15a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IPlug\Extras">
-      <UniqueIdentifier>{e08ee237-fc5e-4c2b-aa7f-3797cdf9bf34}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IPlug\APP">
       <UniqueIdentifier>{13b3737b-7ecf-435c-8da0-08ccf8e2fb84}</UniqueIdentifier>
     </Filter>
@@ -345,8 +337,8 @@
     <Filter Include="IPlug\APP\RTAudioMidi\include">
       <UniqueIdentifier>{649c5de3-b4c2-4de9-8d57-3b1762646259}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IPlug\Extras\Synth">
-      <UniqueIdentifier>{fc763cd3-cc76-4d31-9ba4-a4e7361e4adf}</UniqueIdentifier>
+    <Filter Include="IPlug\Extras">
+      <UniqueIdentifier>{315f7faa-344d-4da7-9bea-835c0ce24fe1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

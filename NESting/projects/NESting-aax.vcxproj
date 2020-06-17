@@ -157,6 +157,7 @@
       </AssemblyDebug>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <DelayLoadDLLs>faust.dll</DelayLoadDLLs>
     </Link>
     <Bscmake />
     <PostBuildEvent />
@@ -281,6 +282,7 @@
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
+      <DelayLoadDLLs>faust.dll</DelayLoadDLLs>
     </Link>
     <Bscmake />
     <PostBuildEvent />
@@ -443,8 +445,15 @@
     <ClCompile Include="..\..\iPlug2\IPlug\AAX\IPlugAAX_Parameters.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\AAX\IPlugAAX_Describe.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\AAX\IPlugAAX.cpp" />
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.cpp" />
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.cpp" />
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.cpp" />
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust_arch.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugAPIBase.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugParameter.cpp" />
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugPaths.cpp" />
@@ -520,10 +529,8 @@
     <ClInclude Include="..\..\iPlug2\IPlug\AAX\IPlugAAX_Parameters.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\AAX\IPlugAAX_TaperDelegate.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\AAX\IPlugAAX.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\ControlRamp.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\SynthVoice.h" />
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.h" />
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust.h" />
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugAPIBase.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugConstants.h" />
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugDelegate_select.h" />
@@ -543,7 +550,6 @@
     <ClInclude Include="..\..\iPlug2\IPlug\IPlug_include_in_plug_src.h" />
     <ClInclude Include="..\config.h" />
     <ClInclude Include="..\NESting.h" />
-    <ClInclude Include="..\NESting_DSP.h" />
     <ClInclude Include="..\resources\resource.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,41 +1,25 @@
 #pragma once
 
 #include "IPlug_include_in_plug_hdr.h"
-#include "IControls.h"
-
-const int kNumPrograms = 1;
-
-enum EParams
-{
-  kParamGain = 0,
-  kParamNoteGlideTime,
-  kParamAttack,
-  kParamDecay,
-  kParamSustain,
-  kParamRelease,
-  kParamLFOShape,
-  kParamLFORateHz,
-  kParamLFORateTempo,
-  kParamLFORateMode,
-  kParamLFODepth,
-  kNumParams
-};
+#include <heapbuf.h>
 
 #if IPLUG_DSP
-// will use EParams in NESting_DSP.h
-#include "NESting_DSP.h"
+#include "IPlugFaustGen.h"
+#endif
+
+#include "IControls.h"
+
+#ifndef DSP_FILE
+#define DSP_FILE ""
 #endif
 
 enum EControlTags
 {
-  kCtrlTagMeter = 0,
-  kCtrlTagLFOVis,
-  kCtrlTagScope,
-  kCtrlTagRTText,
-  kCtrlTagKeyboard,
-  kCtrlTagBender,
+  kCtrlTagScope = 0,
   kNumCtrlTags
 };
+
+const int kNumParams = 5;
 
 using namespace iplug;
 using namespace igraphics;
@@ -45,18 +29,14 @@ class NESting final : public Plugin
 public:
   NESting(const InstanceInfo& info);
 
-#if IPLUG_DSP // http://bit.ly/2S64BDd
-public:
+#if IPLUG_DSP
   void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
-  void ProcessMidiMsg(const IMidiMsg& msg) override;
   void OnReset() override;
   void OnParamChange(int paramIdx) override;
   void OnIdle() override;
-  bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
-
 private:
-  NEStingDSP<sample> mDSP {16};
-  IPeakSender<2> mMeterSender;
-  ISender<1> mLFOVisSender;
+  FAUST_BLOCK(Faust1, mFaustProcessor, DSP_FILE, 1, 1);
+  WDL_TypedBuf<sample> mInputBuffer;
+  IBufferSender<2> mScopeSender;
 #endif
 };

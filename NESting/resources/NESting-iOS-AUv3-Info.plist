@@ -36,18 +36,18 @@
 					<key>manufacturer</key>
 					<string>Acme</string>
 					<key>name</key>
-					<string>Vortexel: NESting</string>
+					<string>vortexel: NESting</string>
 					<key>sandboxSafe</key>
 					<true/>
 					<key>subtype</key>
-					<string>PmBl</string>
+					<string>IpFf</string>
 					<key>tags</key>
 					<array>
-						<string>Synth</string>
-						<string>size:{1024,669}</string>
+						<string>Effects</string>
+						<string>size:{600,600}</string>
 					</array>
 					<key>type</key>
-					<string>aumu</string>
+					<string>aumf</string>
 					<key>version</key>
 					<integer>65536</integer>
 				</dict>

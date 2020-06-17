@@ -478,7 +478,7 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.Vortexel.app.pkg.NESting</string>
+				<string>com.vortexel.app.pkg.NESting</string>
 				<key>NAME</key>
 				<string>Application</string>
 				<key>OVERWRITE_PERMISSIONS</key>
@@ -1014,7 +1014,7 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.Vortexel.vst.pkg.NESting</string>
+				<string>com.vortexel.vst.pkg.NESting</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -1554,7 +1554,7 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.Vortexel.vst3.pkg.NESting</string>
+				<string>com.vortexel.vst3.pkg.NESting</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -2094,7 +2094,7 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.Vortexel.au.pkg.NESting</string>
+				<string>com.vortexel.au.pkg.NESting</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -2634,7 +2634,7 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.Vortexel.aax.pkg.NESting</string>
+				<string>com.vortexel.aax.pkg.NESting</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>

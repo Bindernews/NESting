@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>NESting v1.0.0 Copyright 2019 Acme Inc</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Vortexel.vst3.NESting</string>
+	<string>com.vortexel.vst3.NESting</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
-	<string>PmBl</string>
+	<string>IpFf</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>CSResourcesFileMapped</key>

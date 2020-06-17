@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>NESting.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Vortexel.app.NESting</string>
+	<string>com.vortexel.app.NESting</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -21,7 +21,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
-	<string>PmBl</string>
+	<string>IpFf</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>CSResourcesFileMapped</key>
@@ -32,6 +32,8 @@
 	<string>10.11.0</string>
 	<key>NSMainNibFile</key>
 	<string>NESting-macOS-MainMenu</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs mic access to process audio.</string>
 	<key>NSPrincipalClass</key>
 	<string>SWELLApplication</string>
 </dict>

@@ -71,11 +71,11 @@
     <ClCompile Include="..\..\iPlug2\IPlug\IPlugTimer.cpp">
       <Filter>IPlug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.cpp">
+      <Filter>IPlug\Extras</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.cpp">
-      <Filter>IPlug\Extras\Synth</Filter>
+    <ClCompile Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust_arch.cpp">
+      <Filter>IPlug\Extras</Filter>
     </ClCompile>
     <ClCompile Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.cpp">
       <Filter>IGraphics\Drawing</Filter>
@@ -246,22 +246,15 @@
     <ClInclude Include="..\..\iPlug2\IPlug\IPlugUtilities.h">
       <Filter>IPlug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\ControlRamp.h">
-      <Filter>IPlug\Extras\Synth</Filter>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaust.h">
+      <Filter>IPlug\Extras</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\MidiSynth.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\SynthVoice.h">
-      <Filter>IPlug\Extras\Synth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Synth\VoiceAllocator.h">
-      <Filter>IPlug\Extras\Synth</Filter>
+    <ClInclude Include="..\..\iPlug2\IPlug\Extras\Faust\IPlugFaustGen.h">
+      <Filter>IPlug\Extras</Filter>
     </ClInclude>
     <ClInclude Include="..\..\iPlug2\IGraphics\Drawing\IGraphicsSkia.h">
       <Filter>IGraphics\Drawing</Filter>
     </ClInclude>
-    <ClInclude Include="..\NESting_DSP.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
@@ -289,10 +282,7 @@
       <UniqueIdentifier>{3c740de7-2371-4065-bf3d-5af9193c7b7d}</UniqueIdentifier>
     </Filter>
     <Filter Include="IPlug\Extras">
-      <UniqueIdentifier>{f455cd61-f1f2-4fc5-8206-dd012c63a6fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IPlug\Extras\Synth">
-      <UniqueIdentifier>{d16c1839-657e-4631-b0a1-187ffc2c316b}</UniqueIdentifier>
+      <UniqueIdentifier>{092a84c2-8fce-4c0b-bc9d-44fb8e9ae178}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

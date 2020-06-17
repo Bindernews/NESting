@@ -14,8 +14,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(SRC_FILES
     config.h
-    APUNoise.hpp
-    FaustCode.hpp
+    APUNoise.h
+    APUNoise.cpp
     NESting.h
     NESting.cpp
     resources/main.rc
@@ -34,7 +34,8 @@ add_library(NESting-vst3 SHARED ${SRC_FILES})
 iplug2_configure_target(NESting-vst3 vst3)
 
 begin_faust_target("FaustDSP")
-    add_faust_file("${CMAKE_CURRENT_SOURCE_DIR}/NESting.dsp" "Faust1")
+    add_faust_file("${CMAKE_CURRENT_SOURCE_DIR}/BLockSquare.dsp" "Square")
+    add_faust_file("${CMAKE_CURRENT_SOURCE_DIR}/BlockTriangle.dsp" "Triangle")
 end_faust_target()
 
 foreach(target_name NESting-app NESting-vst2 NESting-vst3)
@@ -45,6 +46,7 @@ foreach(target_name NESting-app NESting-vst2 NESting-vst3)
         ${CMAKE_SOURCE_DIR}/resources
         ${CMAKE_SOURCE_DIR}/resources/fonts
     )
+    target_compile_definitions(${target_name} PUBLIC "SAMPLE_TYPE_FLOAT")
     source_group("memes" ${SRC_FILES})
     target_compile_features(${target_name} PUBLIC cxx_std_14)
     add_dependencies(${target_name} "FaustDSP")

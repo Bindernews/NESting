@@ -21,6 +21,9 @@ set(SRC_FILES
     resources/main.rc
 )
 
+#add_library(NESting-aax SHARED ${SRC_FILES})
+#iplug2_configure_target(NESting-aax aax)
+
 add_executable(NESting-app WIN32 ${SRC_FILES})
 iplug2_configure_target(NESting-app app)
 
@@ -42,7 +45,7 @@ foreach(target_name NESting-app NESting-vst2 NESting-vst3)
         ${CMAKE_SOURCE_DIR}/resources
         ${CMAKE_SOURCE_DIR}/resources/fonts
     )
-    source_group("src" ${SRC_FILES})
+    source_group("memes" ${SRC_FILES})
     target_compile_features(${target_name} PUBLIC cxx_std_14)
     add_dependencies(${target_name} "FaustDSP")
 endforeach()

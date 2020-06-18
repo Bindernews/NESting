@@ -4,11 +4,11 @@
 #include <heapbuf.h>
 
 #if IPLUG_DSP
-#include "FaustTriangle.hpp"
 #include "FaustSquare.hpp"
-// Must be included AFTER your Faust headers
+#include "FaustTriangle.hpp"
 #include "IPlugFaustGen.h"
 #include "APUNoise.h"
+#include "MidiSynth.h"
 #endif
 
 #include "IControls.h"
@@ -20,6 +20,9 @@
 enum EControlTags
 {
   kCtrlTagScope = 0,
+  kCtrlTagBender,
+  kCtrlTagKeyboard,
+  kCtrlTagFreqOut,
   kNumCtrlTags
 };
 
@@ -30,11 +33,14 @@ enum EParam
 	iParamFreq,
 	iParamDuty,
 	iParamShape,
+	iParamGate,
 	kNumParams,
 };
 
 using namespace iplug;
 using namespace igraphics;
+
+class MyVoice;
 
 class NESting final : public Plugin
 {
@@ -43,14 +49,21 @@ public:
 
 #if IPLUG_DSP
   void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
+  void ProcessMidiMsg(const IMidiMsg& msg) override;
   void OnReset() override;
   void OnParamChange(int paramIdx) override;
   void OnIdle() override;
+  bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
+
 private:
-  FAUST_BLOCK(Square, mFaustSquare, DSP_FILE, 1, 1);
-  FAUST_BLOCK(Triangle, mFaustTriangle, DSP_FILE, 1, 1);
-  APUNoise mNoise;
-  WDL_TypedBuf<sample> mInputBuffer;
-  IBufferSender<2> mScopeSender;
+	MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
+	WDL_TypedBuf<sample> mInputBuffer;
+	IBufferSender<2> mScopeSender;
+	void* mGraphics;
+
+	MyVoice* mTestVoice;
+	bool mGateOn;
+
+	friend class MyVoice;
 #endif
 };

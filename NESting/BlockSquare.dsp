@@ -4,7 +4,7 @@ grGeneral(x) = hgroup("1", x);
 
 midifreq = grGeneral(hslider("freq[unit:Hz]", 440, 20, 20000, 1));
 midigain = grGeneral(hslider("gain", 0.5, 0, 1, 0.01));
-pulsewidth = grGeneral(nentry("PulseWidth", 2, 0, 4, 1));
+pulsewidth = grGeneral(nentry("PulseWidth", 2, 0, 5, 1));
 
 squareValue = saw1 + saw2
 with {

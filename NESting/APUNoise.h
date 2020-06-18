@@ -7,15 +7,6 @@
 #include <algorithm>
 #include "IPlugConstants.h"
 
-
-static inline float unlerp(float low, float high, float x) { return (x - low) / (high - low); }
-static inline float lerp(float low, float high, float x) { return (x * (high - low)) + low; }
-static inline float clampf(float low, float high, float x) {
-    if (x < low) { return low; }
-    if (x > high) { return high; }
-    return x;
-}
-
 class APUNoise {
 public:
     APUNoise();
@@ -24,7 +15,8 @@ public:
     void SetParameter(int paramId, double value);
     double GetParameter(int paramId);
     void Reset();
-    void Compute(iplug::sample** inputs, iplug::sample** outputs, int nFrames);
+    void OnRelease();
+    void ProcessBlock(iplug::sample** inputs, iplug::sample** outputs, int nFrames);
 
 private:
     void updateTimerPeriod();

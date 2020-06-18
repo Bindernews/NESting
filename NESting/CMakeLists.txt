@@ -38,6 +38,8 @@ begin_faust_target("FaustDSP")
     add_faust_file("${CMAKE_CURRENT_SOURCE_DIR}/BlockTriangle.dsp" "Triangle")
 end_faust_target()
 
+message("${FaustDSP_CPP_FILES}")
+
 foreach(target_name NESting-app NESting-vst2 NESting-vst3)
     target_include_directories(${target_name} PUBLIC 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> 
@@ -46,8 +48,9 @@ foreach(target_name NESting-app NESting-vst2 NESting-vst3)
         ${CMAKE_SOURCE_DIR}/resources
         ${CMAKE_SOURCE_DIR}/resources/fonts
     )
-    target_compile_definitions(${target_name} PUBLIC "SAMPLE_TYPE_FLOAT")
     source_group("memes" ${SRC_FILES})
+    target_compile_definitions(${target_name} PUBLIC "SAMPLE_TYPE_FLOAT")
     target_compile_features(${target_name} PUBLIC cxx_std_14)
     add_dependencies(${target_name} "FaustDSP")
+    target_sources(${target_name} PRIVATE ${FaustDSP_CPP_FILES})
 endforeach()

@@ -29,7 +29,7 @@ void APUNoise::SetParameter(int paramId, double value)
         break;
     // Timer period
     case 1:
-        timerPeriodIndex = int(clampf(0., 15., lerp(0, 15, value)));
+        timerPeriodIndex = int(clampf(0., 15., lerp(0., 15., value)));
         updateTimerPeriod();
         break;
     // Timer mode (0 - 1)
@@ -58,7 +58,7 @@ double APUNoise::GetParameter(int paramId)
 void APUNoise::Reset() {
     sampleRate = 48000;
     timerPeriodIndex = 0;
-    timerMode = 1;
+    timerMode = 0;
     lfsrIndex = 0;
     updateTimerPeriod();
 
@@ -66,13 +66,20 @@ void APUNoise::Reset() {
     shiftReg = 0x1;
 }
 
-void APUNoise::Compute(sample** inputs, sample** outputs, int nFrames) {
+void APUNoise::OnRelease()
+{
+    lfsrIndex = 0;
+    shiftReg = 0x1;
+    sampleCount = 0;
+}
+
+void APUNoise::ProcessBlock(sample** inputs, sample** outputs, int nFrames) {
     sample* input0 = inputs[0];
     sample* output0 = outputs[0];
 
     for (int i = 0; i < nFrames; i += 1) {
         // Output the next bit of noise
-        output0[i] = sample(double( (shiftReg >> lfsrIndex) & 0x1 ) * gain);
+        output0[i] = sample(double( (shiftReg >> 0) & 0x1 ) * gain);
         // Update the lfsrIndex
         lfsrIndex = (lfsrIndex + 1) % 15;
         // Update our sample count which acts as the timer
@@ -87,8 +94,12 @@ void APUNoise::Compute(sample** inputs, sample** outputs, int nFrames) {
 }
 
 void APUNoise::updateTimerPeriod() {
-    //timerPeriod = (sampleRate / 60) * TIMER_PERIOD_TABLE[timerPeriodIndex];
-    timerPeriod = TIMER_PERIOD_TABLE[timerPeriodIndex];
+    float nesApuSpeed = float(sampleRate) / 44750.f;
+    timerPeriod = int(nesApuSpeed * float(TIMER_PERIOD_TABLE[timerPeriodIndex]));
+    if (timerPeriod < 1) {
+        timerPeriod = 1;
+    }
+    // timerPeriod = TIMER_PERIOD_TABLE[timerPeriodIndex];
 }
 
 void APUNoise::doShiftRegister() {
@@ -100,5 +111,6 @@ void APUNoise::doShiftRegister() {
         feedback ^= (shiftReg >> 1);
     }
     feedback = (feedback << 14) & 0x4000;
-    shiftReg = ((shiftReg >> 1) | feedback) & 0x7FFF;
+    shiftReg = (shiftReg >> 1) & 0x3FFF;
+    shiftReg = shiftReg | feedback;
 }

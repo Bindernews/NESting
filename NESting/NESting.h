@@ -59,8 +59,6 @@ private:
 	MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
 	WDL_TypedBuf<sample> mInputBuffer;
 	IBufferSender<2> mScopeSender;
-	void* mGraphics;
-
 	MyVoice* mTestVoice;
 	bool mGateOn;
 

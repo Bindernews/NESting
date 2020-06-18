@@ -2,6 +2,10 @@
 build/
 build-ninja/
 
+# Ignore extra REAPER files
+*.RPP-UNDO
+*.RPP-bak
+
 # Prerequisites
 *.d
 

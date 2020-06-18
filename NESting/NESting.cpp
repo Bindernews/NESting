@@ -2,7 +2,7 @@
 #include "IPlug_include_in_plug_src.h"
 #include "ADSREnvelope.h"
 #include "math_utils.h"
-
+ 
 #if IPLUG_DSP
 class MyVoice : public SynthVoice
 {
@@ -37,17 +37,6 @@ public:
     void Release() override
     {
         mADSR.Release();
-
-        if (mOwner.mGraphics != nullptr)
-        {
-            auto pGraphics = static_cast<IGraphics*>(mOwner.mGraphics);
-            auto lbl = dynamic_cast<IVLabelControl*>(pGraphics->GetControlWithTag(kCtrlTagFreqOut));
-            WDL_String msg(0, 0);
-            msg.AppendFormatted(20, "Freq: %.3f", mOscFreq);
-            lbl->SetStr(msg.Get());
-            lbl->SetValueStr(msg.Get());
-            lbl->SetDirty(true);
-        }
     }
 
     void ProcessSamplesAccumulating(sample** inputs, sample** outputs, int nInputs, int nOutputs, int startIdx, int nFrames) override
@@ -122,7 +111,6 @@ NESting::NESting(const InstanceInfo& info)
     GetParam(iParamDuty)->InitInt("duty", 2, 0, 4);
     GetParam(iParamShape)->InitInt("shape", 0, 0, 2);
     GetParam(iParamGate)->InitBool("gate", false);
-    mGraphics = nullptr;
 
 #if IPLUG_DSP
     mSynth.AddVoice(new MyVoice(*this), 0);
@@ -152,16 +140,14 @@ NESting::NESting(const InstanceInfo& info)
     
         pGraphics->AttachPanelBackground(COLOR_GRAY);
         pGraphics->AttachControl(new IVScopeControl<2>(viz, "", DEFAULT_STYLE.WithColor(kBG, COLOR_BLACK).WithColor(kFG, COLOR_GREEN)), kCtrlTagScope);
+#ifdef APP_API
         IRECT keyboardBounds = b.GetFromBottom(200);
         pGraphics->AttachControl(new IVKeyboardControl(keyboardBounds), kCtrlTagKeyboard);
         pGraphics->SetQwertyMidiKeyHandlerFunc([pGraphics](const IMidiMsg& msg) {
             dynamic_cast<IVKeyboardControl*>(pGraphics->GetControlWithTag(kCtrlTagKeyboard))->SetNoteFromMidi(msg.NoteNumber(), msg.StatusMsg() == IMidiMsg::kNoteOn);
         });
-
-        IRECT freqLabelBounds = b.GetFromTLHC(110.f, 120.f);
-        pGraphics->AttachControl(new IVLabelControl(freqLabelBounds, ""), kCtrlTagFreqOut);
-
-        mGraphics = pGraphics;
+#endif
+       
     };
 #endif
 }

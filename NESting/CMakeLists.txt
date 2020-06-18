@@ -5,7 +5,7 @@ set(iPlug2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../iPlug2)
 find_package(iPlug2 REQUIRED)
 find_package(Faust REQUIRED)
 iplug2_configure("NESting"
-    FAUST NANOVG GL2
+    FAUST NANOVG GL2 SYNTH
 )
 
 #message("${CMAKE_GENERATOR}  ${CMAKE_GENERATOR_PLATFORM}  ${CMAKE_VS_PLATFORM_NAME}")

@@ -52,5 +52,23 @@ add_library(NESting-vst3 SHARED ${SRC_FILES})
 target_link_libraries(NESting-vst3 PUBLIC iPlug2_VST3 _base)
 iplug2_configure_target(NESting-vst3 vst3)
 
-source_group("memes" ${SRC_FILES})
+source_group("src" FILES ${SRC_FILES})
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  set(REAPER_PATH "C:\\Program Files\\REAPER (x64)\\reaper.exe")
+  string(CONFIGURE [=[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand>${REAPER_PATH}</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>${CMAKE_SOURCE_DIR}\NESting.RPP</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>${REAPER_PATH}</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>${CMAKE_SOURCE_DIR}\NESting.RPP</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+</Project>]=] _text)
+  file(WRITE "${CMAKE_BINARY_DIR}/NESting-vst3.vcxproj.user" "${_text}")
+endif()
 

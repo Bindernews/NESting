@@ -4,11 +4,7 @@
 #include <heapbuf.h>
 
 #if IPLUG_DSP
-#include "FaustSquare.hpp"
-#include "FaustTriangle.hpp"
-#include "IPlugFaustGen.h"
-#include "APUNoise.h"
-#include "MidiSynth.h"
+#include "NESVoice.h"
 #endif
 
 #include "IControls.h"
@@ -40,8 +36,6 @@ enum EParam
 using namespace iplug;
 using namespace igraphics;
 
-class MyVoice;
-
 class NESting final : public Plugin
 {
 public:
@@ -59,9 +53,9 @@ private:
 	MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
 	WDL_TypedBuf<sample> mInputBuffer;
 	IBufferSender<2> mScopeSender;
-	MyVoice* mTestVoice;
+	NESVoice* mTestVoice;
 	bool mGateOn;
 
-	friend class MyVoice;
+	friend class NESVoice;
 #endif
 };

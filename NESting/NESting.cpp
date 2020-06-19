@@ -1,106 +1,6 @@
 #include "NESting.h"
 #include "IPlug_include_in_plug_src.h"
-#include "ADSREnvelope.h"
 #include "math_utils.h"
- 
-#if IPLUG_DSP
-class MyVoice : public SynthVoice
-{
-public:
-    MyVoice(NESting& owner) : mOwner(owner), mADSR("gain", [&]() { mNoise.OnRelease(); })
-    {
-        mFaustTriangle.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
-        mFaustTriangle.Init();
-
-        mFaustSquare.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
-        mFaustSquare.Init();
-
-        mNoise.Reset();
-        mOwnerGain = 0.5;
-    }
-
-    bool GetBusy() const override
-    {
-        return mADSR.GetBusy();
-    }
-
-    void Trigger(double level, bool isRetrigger) override
-    {
-        if (isRetrigger) {
-            mADSR.Retrigger(sample(level));
-        }
-        else {
-            mADSR.Start(sample(level));
-        }
-    }
-
-    void Release() override
-    {
-        mADSR.Release();
-    }
-
-    void ProcessSamplesAccumulating(sample** inputs, sample** outputs, int nInputs, int nOutputs, int startIdx, int nFrames) override
-    {
-        double pitch = mInputs[kVoiceControlPitch].endValue;
-        double pitchBend = mInputs[kVoiceControlPitchBend].endValue;
-
-        // Convert midi pitch into actual frequency
-        double oscFreq = 440. * pow(2., pitch + pitchBend);
-        
-        mOscFreq = oscFreq;
-
-        double gain = mADSR.Process(1) * mGain * mOwnerGain;
-
-        sample* outputs2[2];
-        sample_offset(outputs, outputs2, 2, startIdx);
-
-        ProcessSamples(oscFreq, gain, inputs, outputs2, nFrames);
-    }
-
-    void ProcessSamples(double oscFreq, double gain, sample** inputs, sample** outputs, int nFrames)
-    {
-        // Normalize for triangle and square
-        double freqNorm = unlerp(20., 20000., oscFreq);
-        // Normalize "frequency" for the noise generator.
-        double freqNoise = double(mKey % 16) / 16.0;
-
-        switch (mShape) {
-        case 0:
-            mFaustSquare.SetParameterValueNormalised(1, freqNorm);
-            mFaustSquare.SetParameterValue("gain", gain);
-            mFaustSquare.ProcessBlock(inputs, outputs, nFrames);
-            break;
-        case 1:
-            mFaustTriangle.SetParameterValueNormalised(0, freqNorm);
-            mFaustTriangle.SetParameterValue("gain", gain);
-            mFaustTriangle.ProcessBlock(inputs, outputs, nFrames);
-            break;
-        case 2:
-            mNoise.SetParameter(1, freqNoise);
-            mNoise.SetParameter(3, gain);
-            mNoise.ProcessBlock(inputs, outputs, nFrames);
-            break;
-        }
-    }
-
-    void SetSampleRateAndBlockSize(double sampleRate, int blockSize)
-    {
-        mFaustSquare.SetSampleRate(sampleRate);
-        mFaustTriangle.SetSampleRate(sampleRate);
-        mNoise.SetParameter(0, sampleRate);
-        mADSR.SetSampleRate((sample)sampleRate);
-    }
-
-    sample mOwnerGain;
-    double mOscFreq;
-    int mShape = 0;
-    NESting& mOwner;
-    FAUST_BLOCK(Square, mFaustSquare, DSP_FILE, 1, 1);
-    FAUST_BLOCK(Triangle, mFaustTriangle, DSP_FILE, 1, 1);
-    APUNoise mNoise;
-    ADSREnvelope<sample> mADSR;
-};
-#endif
 
 
 NESting::NESting(const InstanceInfo& info)
@@ -113,8 +13,8 @@ NESting::NESting(const InstanceInfo& info)
     GetParam(iParamGate)->InitBool("gate", false);
 
 #if IPLUG_DSP
-    mSynth.AddVoice(new MyVoice(*this), 0);
-    mTestVoice = new MyVoice(*this);
+    mSynth.AddVoice(new NESVoice(*this), 0);
+    mTestVoice = new NESVoice(*this);
     mGateOn = false;
 #endif
   
@@ -233,7 +133,7 @@ void NESting::OnParamChange(int paramIdx)
     }
 
     for (size_t i = 0; i < mSynth.NVoices(); i += 1) {
-        auto voice = dynamic_cast<MyVoice*>(mSynth.GetVoice(i));
+        auto voice = dynamic_cast<NESVoice*>(mSynth.GetVoice(i));
         
         switch (paramIdx) {
         case iParamGain:

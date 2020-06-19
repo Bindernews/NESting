@@ -17,7 +17,6 @@
 *.xcschememanagement.plist
 build-*
 ipch/*
-gui/*
 
 Icon?
 .DS_Stor*

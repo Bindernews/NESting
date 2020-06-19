@@ -17,6 +17,10 @@ set(SRC_FILES
     NESVoice.cpp
     NESting.h
     NESting.cpp
+    gui/IVDropdownMenuControl.h
+    gui/IVDropdownMenuControl.cpp
+    gui/ControlBarGraph.h
+    gui/ControlBarGraph.cpp
     resources/main.rc
 )
 
@@ -30,12 +34,13 @@ add_faust_target(FaustDSP
 # dirs we need, defines some globals, and then links to the various iPlug2
 # libraries we're using. 
 # We could use individual calls for this, but I find this function easier to read.
-iplug2_add_interface(_base
+add_library(_base INTERFACE)
+iplug2_target_add(_base INTERFACE
   INCLUDE 
     ${CMAKE_CURRENT_SOURCE_DIR} ${FaustDSP_INCLUDE_DIR} 
     ${CMAKE_SOURCE_DIR}/resources ${CMAKE_SOURCE_DIR}/resources/fonts
   DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED"
-  LINK iPlug2_Synth iPlug2_Faust iPlug2_GL2 iPlug2_NANOVG
+  LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG
   DEPEND FaustDSP
 )
 target_compile_features(_base INTERFACE cxx_std_14)
@@ -49,10 +54,10 @@ target_link_libraries(NESting-vst2 PUBLIC iPlug2_VST2 _base)
 iplug2_configure_target(NESting-vst2 vst2)
 
 add_library(NESting-vst3 SHARED ${SRC_FILES})
-target_link_libraries(NESting-vst3 PUBLIC iPlug2_VST3 _base)
+iplug2_target_add(NESting-vst3 PUBLIC LINK iPlug2_VST3 _base)
 iplug2_configure_target(NESting-vst3 vst3)
 
-source_group("src" FILES ${SRC_FILES})
+source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${SRC_FILES})
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(REAPER_PATH "C:\\Program Files\\REAPER (x64)\\reaper.exe")

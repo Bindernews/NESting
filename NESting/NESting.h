@@ -35,9 +35,23 @@ enum EParam
 	iParamGain,
 	iParamDuty,
 	iParamNoiseMode,
+	iParamUseAutomationGraphs,
 
 	iParamVolumeSteps,
 	iParamVolumeLoopPoint,
+	iParamVolumeTime,
+	iParamVolumeTempoSync,
+
+	iParamDutySteps,
+	iParamDutyLoopPoint,
+	iParamDutyTime,
+	iParamDutyTempoSync,
+
+	iParamPitchSteps,
+	iParamPitchLoopPoint,
+	iParamPitchTime,
+	iParamPitchTempoSync,
+
 	kNumParams,
 };
 
@@ -52,8 +66,6 @@ public:
 #if IPLUG_EDITOR
 public:
 	void ShowAutomationGraphs(bool visible);
-private:
-	IVPanelControl* BuildGraphPanel(const IRECT& b, IColor color);
 #endif
 
 #if IPLUG_DSP
@@ -64,11 +76,13 @@ public:
   void OnParamChange(int paramIdx) override;
   void OnIdle() override;
   bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
+  void SendControlMsgFromDelegate(int ctrlTag, int msgTag, int dataSize, const void* pData) override;
 
 private:
 	MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
 	WDL_TypedBuf<sample> mInputBuffer;
 	IBufferSender<2> mScopeSender;
+	ISender<4> mSender;
 
 	friend class NESVoice;
 #endif

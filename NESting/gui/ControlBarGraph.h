@@ -3,6 +3,7 @@
 #include <IControl.h>
 #include <heapbuf.h>
 #include "ColorSpec.h"
+#include <slice.hpp>
 
 using namespace iplug;
 using namespace iplug::igraphics;
@@ -23,10 +24,13 @@ public:
 
 	struct Style {
 		IColor barColor;
-		IRECT labelPadding;
+		float padding;
+		float labelWidth;
+		float labelPadding;
 	};
 
-	ControlBarGraph(const IRECT& bounds, const char *label = "", const IVStyle& style = DEFAULT_STYLE);
+	ControlBarGraph(const IRECT& bounds, int maxValues = 64, float defaultValue = 0.5f, 
+		const char *label = "", const IVStyle& style = DEFAULT_STYLE);
 	~ControlBarGraph();
 
 	void Draw(IGraphics& g) override;
@@ -40,7 +44,7 @@ public:
 	/// The point values must be sorted lowest to highest.
 	/// 
 	/// @param l initializer list of points
-	void SetStops(const std::initializer_list<LabelPoint> l);
+	void SetStops(const bn::slice<LabelPoint> stops);
 
 	void SetSteps(int steps);
 	inline int GetSteps() const { return mNumSteps; }

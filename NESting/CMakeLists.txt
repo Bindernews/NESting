@@ -23,10 +23,12 @@ set(SRC_FILES
     NESVoice.cpp
     NESting.h
     NESting.cpp
+    slice.hpp
     gui/IVDropdownMenuControl.h
     gui/IVDropdownMenuControl.cpp
     gui/ControlBarGraph.h
     gui/ControlBarGraph.cpp
+    ${RES_FILES}
 )
 
 # Have to do this first, so we can include these files in all other targets.
@@ -54,12 +56,12 @@ add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})
 iplug2_target_add(NESting-app PUBLIC LINK iPlug2_APP _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-app app)
 
-add_library(NESting-vst2 SHARED ${SRC_FILES})
+add_library(NESting-vst2 MODULE ${SRC_FILES})
 iplug2_target_add(NESting-vst2 PUBLIC LINK iPlug2_VST2 _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-vst2 vst2)
 
 add_library(NESting-vst3 MODULE ${SRC_FILES})
-iplug2_target_add(NESting-vst3 PUBLIC LINK iPlug2_VST3 _base RESOURCE ${RES_FILES})
+iplug2_target_add(NESting-vst3 PUBLIC DEFINE "VST3_NUM_CC_CHANS=0" LINK iPlug2_VST3 _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-vst3 vst3)
 
 source_group("Resources" FILES ${RES_FILES})

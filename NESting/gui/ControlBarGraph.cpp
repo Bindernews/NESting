@@ -2,25 +2,34 @@
 #include "ControlBarGraph.h"
 #include "math_utils.h"
 
-ControlBarGraph::ControlBarGraph(const IRECT& bounds, const char *label, const IVStyle& style)
+ControlBarGraph::ControlBarGraph(const IRECT& bounds, int maxSteps, float defaultValue, const char *label,
+		const IVStyle& style)
 	: IControl(bounds), IVectorBase(style, false, false)
 {
 	AttachIControl(this, label);
 	mNumSteps = 0;
 	mIsContinuous = false;
-	mDefaultValue = 0.f;
+	mDefaultValue = defaultValue;
 	mStops.Resize(0, true);
 	mLabelWidth = -1.f;
+	
 	iStyle.barColor = COLOR_RED;
-	iStyle.labelPadding = IRECT(20.f, 0, 5.f, 0);
+	iStyle.padding = 8.f;
+	iStyle.labelWidth = 30.f;
+	iStyle.labelPadding = 6.f;
+
 	mStyle.labelText.mAlign = EAlign::Far;
 	mStyle.labelText.mVAlign = EVAlign::Middle;
+
+	// Initialize values
+	float* values_ = mValues.Resize(maxSteps);
+	for (int i = 0; i < maxSteps; i++) {
+		values_[i] = mDefaultValue;
+	}
 }
 
 ControlBarGraph::~ControlBarGraph()
-{
-
-}
+{}
 
 void ControlBarGraph::Draw(IGraphics& g)
 {
@@ -45,21 +54,44 @@ void ControlBarGraph::DrawWidget(IGraphics& g)
 	}
 	
 	// Start by drawing the scale to the left
-	IRECT textBounds = mRECT.GetAltered(iStyle.labelPadding.L, 0, 0, 0);
-	textBounds.R = textBounds.L + mLabelWidth;
-
+	IRECT textBounds = mRECT.GetPadded(-iStyle.padding);
 	for (int i = 0; i < mStops.GetSize(); i += 1) {
 		auto stop = mStops.GetFast()[i];
 		if (stop.label) {
 			float y = textBounds.B - int(stop.value * textBounds.H());
-			g.DrawText(mStyle.labelText, stop.label, textBounds.L + mLabelWidth, y);
+			g.DrawText(mStyle.labelText, stop.label, textBounds.L + iStyle.labelWidth, y);
 		}
 	}
 
 	// Now draw the bars
-	mBarBounds = mRECT;
-	mBarBounds.L = textBounds.R + iStyle.labelPadding.R;
+	mBarBounds = textBounds;
+	mBarBounds.L += iStyle.labelWidth + iStyle.labelPadding;
 	DrawBars(g, mBarBounds);
+}
+
+void ControlBarGraph::DrawBars(IGraphics& g, const IRECT& bounds)
+{
+	if (mNumSteps == 0) {
+		return;
+	}
+	IRECT box0 = bounds.GetGridCell(0, 1, mNumSteps);
+
+	// Take our bar color and lighten it slightly for the ending bar color
+	float h, s, l, a;
+	iStyle.barColor.GetHSLA(h, l, s, a);
+	l -= 0.2f;
+	IColor barColor1 = IColor::FromHSLA(h, l, s, a);
+
+	g.PathTransformSave();
+	auto gradient = IPattern::CreateLinearGradient(box0, EDirection::Horizontal, { IColorStop(iStyle.barColor, 0.f), IColorStop(barColor1, 1.f) });
+	for (int i = 0; i < mNumSteps; i += 1) {
+		float val = mValues.GetFast()[i];
+		IRECT bound = box0.FracRectVertical(val, false);
+		g.PathRect(bound);
+		g.PathFill(gradient);
+		g.PathTransformTranslate(box0.W(), 0);
+	}
+	g.PathTransformRestore();
 }
 
 void ControlBarGraph::OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& mod)
@@ -108,31 +140,6 @@ void ControlBarGraph::OnMouseDrag(float x, float y, float dX, float dY, const IM
 	}
 }
 
-void ControlBarGraph::DrawBars(IGraphics& g, const IRECT& bounds)
-{
-	if (mNumSteps == 0) {
-		return;
-	}
-	IRECT box0 = bounds.GetGridCell(0, 1, mNumSteps);
-
-	// Take our bar color and lighten it slightly for the ending bar color
-	float h, s, l, a;
-	iStyle.barColor.GetHSLA(h, l, s, a);
-	l -= 0.2f;
-	IColor barColor1 = IColor::FromHSLA(h, l, s, a);
-
-	g.PathTransformSave();
-	auto gradient = IPattern::CreateLinearGradient(box0, EDirection::Horizontal, { IColorStop(iStyle.barColor, 0.f), IColorStop(barColor1, 1.f) });
-	for (int i = 0; i < mNumSteps; i += 1) {
-		float val = mValues.GetFast()[i];
-		IRECT bound = box0.FracRectVertical(val, false);
-		g.PathRect(bound);
-		g.PathFill(gradient);
-		g.PathTransformTranslate(box0.W(), 0);
-	}
-	g.PathTransformRestore();
-}
-
 void ControlBarGraph::SetSteps(int steps)
 {
 	if (steps < 0) { return; }
@@ -146,10 +153,10 @@ void ControlBarGraph::SetSteps(int steps)
 	mNumSteps = steps;
 }
 
-void ControlBarGraph::SetStops(std::initializer_list<LabelPoint> l)
+void ControlBarGraph::SetStops(const bn::slice<LabelPoint> l)
 {
-	auto ptr = mStops.Resize(l.size(), true);
-	for (int i = 0; i < l.size(); i += 1) {
-		ptr[i] = *(l.begin() + i);
+	auto ptr = mStops.Resize(l.len(), true);
+	for (int i = 0; i < l.len(); i += 1) {
+		ptr[i] = l[i];
 	}
 }

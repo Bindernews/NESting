@@ -11,8 +11,8 @@
 #define FAUST_COMPILED 1
 
 #define BUNDLE_NAME "NESting"
-#define BUNDLE_MFR "Binder News"
-#define BUNDLE_DOMAIN "vortexel.com"
+#define BUNDLE_MFR "vortexel"
+#define BUNDLE_DOMAIN "com"
 
 #define SHARED_RESOURCES_SUBPATH "NESting"
 
@@ -25,6 +25,7 @@
 #define PLUG_DOES_MPE 0
 #define PLUG_DOES_STATE_CHUNKS 0
 #define PLUG_HAS_UI 1
+#define PLUG_HOST_RESIZE 0
 #define PLUG_WIDTH 600
 #define PLUG_HEIGHT 600
 #define PLUG_FPS 60

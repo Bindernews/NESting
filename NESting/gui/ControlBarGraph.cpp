@@ -24,7 +24,7 @@ ControlBarGraph::~ControlBarGraph()
 
 void ControlBarGraph::Draw(IGraphics& g)
 {
-	DrawBackGround(g, mRECT);
+	DrawBackground(g, mRECT);
 	DrawWidget(g);
 	DrawLabel(g);
 	DrawValue(g, mMouseIsOver);

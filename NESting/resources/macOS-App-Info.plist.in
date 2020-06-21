@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${IPLUG2_APP_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>NESting v1.0.0 Copyright 2019 Acme Inc</string>
+	<key>CFBundleIconFile</key>
+	<string>${IPLUG2_APP_NAME}.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.vortexel.app.NESting</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${IPLUG2_APP_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${PROJECT_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>IpFf</string>
+	<key>CFBundleVersion</key>
+	<string>${PROJECT_VERSION}</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.music</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.11.0</string>
+	<key>NSMainNibFile</key>
+	<string>NESting-macOS-MainMenu</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs mic access to process audio.</string>
+	<key>NSPrincipalClass</key>
+	<string>SWELLApplication</string>
+</dict>
+</plist>

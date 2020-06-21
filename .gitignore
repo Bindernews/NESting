@@ -6,6 +6,9 @@ build-ninja/
 *.RPP-UNDO
 *.RPP-bak
 
+# Ignore MacOS files
+.DS_Store
+
 # Prerequisites
 *.d
 

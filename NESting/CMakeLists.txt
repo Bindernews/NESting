@@ -5,9 +5,15 @@ set(iPlug2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../iPlug2)
 find_package(iPlug2 REQUIRED)
 find_package(Faust REQUIRED)
 
-#message("${CMAKE_GENERATOR}  ${CMAKE_GENERATOR_PLATFORM}  ${CMAKE_VS_PLATFORM_NAME}")
+#message("${CMAKE_GENERATOR}  ${CMAKE_GENERATOR_PLATFORM}  ${CMAKE_CXX_COMPILER_ID}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+set(sdk "${CMAKE_SOURCE_DIR}")
+
+set(RES_FILES
+  "${sdk}/resources/fonts/Roboto-Regular.ttf"
+)
 
 set(SRC_FILES
     config.h
@@ -21,7 +27,6 @@ set(SRC_FILES
     gui/IVDropdownMenuControl.cpp
     gui/ControlBarGraph.h
     gui/ControlBarGraph.cpp
-    resources/main.rc
 )
 
 # Have to do this first, so we can include these files in all other targets.
@@ -42,21 +47,22 @@ iplug2_target_add(_base INTERFACE
   DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED"
   LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG
   DEPEND FaustDSP
+  FEATURE cxx_std_14
 )
-target_compile_features(_base INTERFACE cxx_std_14)
 
-add_executable(NESting-app WIN32 ${SRC_FILES})
-target_link_libraries(NESting-app PUBLIC iPlug2_APP _base)
+add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})
+iplug2_target_add(NESting-app PUBLIC LINK iPlug2_APP _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-app app)
 
 add_library(NESting-vst2 SHARED ${SRC_FILES})
-target_link_libraries(NESting-vst2 PUBLIC iPlug2_VST2 _base)
+iplug2_target_add(NESting-vst2 PUBLIC LINK iPlug2_VST2 _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-vst2 vst2)
 
-add_library(NESting-vst3 SHARED ${SRC_FILES})
-iplug2_target_add(NESting-vst3 PUBLIC LINK iPlug2_VST3 _base)
+add_library(NESting-vst3 MODULE ${SRC_FILES})
+iplug2_target_add(NESting-vst3 PUBLIC LINK iPlug2_VST3 _base RESOURCE ${RES_FILES})
 iplug2_configure_target(NESting-vst3 vst3)
 
+source_group("Resources" FILES ${RES_FILES})
 source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${SRC_FILES})
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")

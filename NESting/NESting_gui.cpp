@@ -244,9 +244,11 @@ void NESting::layoutUI(IGraphics* ui)
     IPattern::CreateLinearGradient(b, EDirection::Vertical, { COLOR_STOP_BG_TOP, COLOR_STOP_BG_BOT }));
   bgPanel->SetRECT(ui->GetBounds());
 
+#ifdef APP_API
   // Adjust the location of the keyboard.
   IRECT keyboardBounds = b.GetFromBottom(KEYBOARD_HEIGHT);
   ui->GetControlWithTag(kCtrlTagKeyboard)->SetRECT(keyboardBounds);
+#endif
 
   // Show/hide controls based on the current state of the Use LFO Graphs parameter.
   {
@@ -261,7 +263,7 @@ float NESting::getDesiredHeight()
 {
   float h = MAIN_PANEL_HEIGHT;
   if (GetParam(iParamUseAutomationGraphs)->Bool()) {
-    h += GRAPH_PANEL_HEIGHT;
+    h += GRAPH_PANEL_HEIGHT + PANEL_PADDING;
   }
   else {
     h += AUTOMATION_PANEL_HEIGHT;

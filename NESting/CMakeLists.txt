@@ -38,6 +38,7 @@ iplug2_target_add(BsonCXX PUBLIC
   SOURCE ${_src}
 )
 source_group(TREE ${sdk} PREFIX "" FILES ${_src})
+unset(_src)
 
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

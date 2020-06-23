@@ -22,6 +22,7 @@ extern const double TEMPO_DIVISION_VALUES[15];
 #define AUTOMATION_PANEL_HEIGHT (80.)
 #define GRAPH_PANEL_HEIGHT (400.)
 #define KEYBOARD_HEIGHT (200.)
+#define PANEL_PADDING (20.f)
 #define KEYBOARD_PANEL_HEIGHT (KEYBOARD_HEIGHT + 60.f)
 #define GRAPHS_GROUP "automationGraph"
 #define ENVELOPES_GROUP "envelopes"

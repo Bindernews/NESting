@@ -17,17 +17,22 @@ set(RES_FILES
 
 set(SRC_FILES
     config.h
+    constants.h
     APUNoise.h
     APUNoise.cpp
     NESVoice.h
     NESVoice.cpp
     NESting.h
     NESting.cpp
+    NESting_serialize.cpp
+    LFOGraph.h
+    LFOGraph.cpp
     slice.hpp
+    math_utils.h
     gui/IVDropdownMenuControl.h
     gui/IVDropdownMenuControl.cpp
-    gui/ControlBarGraph.h
-    gui/ControlBarGraph.cpp
+    gui/LFOGraphControl.h
+    gui/LFOGraphControl.cpp
     ${RES_FILES}
 )
 
@@ -44,13 +49,16 @@ add_faust_target(FaustDSP
 add_library(_base INTERFACE)
 iplug2_target_add(_base INTERFACE
   INCLUDE 
-    ${CMAKE_CURRENT_SOURCE_DIR} ${FaustDSP_INCLUDE_DIR} 
+    ${CMAKE_CURRENT_SOURCE_DIR} 
+    ${FaustDSP_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/resources ${CMAKE_SOURCE_DIR}/resources/fonts
   DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED"
   LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG
   DEPEND FaustDSP
-  FEATURE cxx_std_14
 )
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  target_compile_options(_base INTERFACE "/openmp" "/std:c++17")
+endif()
 
 add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})
 iplug2_target_add(NESting-app PUBLIC LINK iPlug2_APP _base RESOURCE ${RES_FILES})

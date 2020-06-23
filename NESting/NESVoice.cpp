@@ -1,18 +1,25 @@
 #include "NESVoice.h"
 #include "NESting.h"
 #include "math_utils.h"
+#include "constants.h"
 
 #if IPLUG_DSP
-NESVoice::NESVoice(NESting& owner) : mOwner(owner), mADSR("gain", [&]() { mNoise.OnRelease(); })
+NESVoice::NESVoice(NESting& owner) 
+    : mOwner(owner), mADSR("gain", [&]() { mNoise.OnRelease(); }),
+      mGainGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_VOLUME),
+      mPitchGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_PITCH),
+      mDutyGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_DUTY),
+      mFinePitchGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_FINE_PITCH)
 {
-    mFaustTriangle.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
-    mFaustTriangle.Init();
+  mSustain = 1.0f;
 
-    mFaustSquare.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
-    mFaustSquare.Init();
+  mFaustTriangle.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
+  mFaustTriangle.Init();
 
-    mNoise.Reset();
-    mOwnerGain = 0.5;
+  mFaustSquare.SetMaxChannelCount(mOwner.MaxNChannels(ERoute::kInput), mOwner.MaxNChannels(ERoute::kOutput));
+  mFaustSquare.Init();
+
+  mNoise.Reset();
 }
 
 NESVoice::~NESVoice()
@@ -32,11 +39,19 @@ void NESVoice::Trigger(double level, bool isRetrigger)
     else {
         mADSR.Start(sample(level));
     }
+
+    mGainGraph.Trigger(level, isRetrigger);
+    mPitchGraph.Trigger(level, isRetrigger);
+    mDutyGraph.Trigger(level, isRetrigger);
 }
 
 void NESVoice::Release()
 {
     mADSR.Release();
+
+    mGainGraph.Release();
+    mPitchGraph.Release();
+    mDutyGraph.Release();
 }
 
 void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int nInputs, int nOutputs, int startIdx, int nFrames)
@@ -44,39 +59,44 @@ void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int
     double pitch = mInputs[kVoiceControlPitch].endValue;
     double pitchBend = mInputs[kVoiceControlPitchBend].endValue;
 
-    // Convert midi pitch into actual frequency
-    double oscFreq = 440. * pow(2., pitch + pitchBend);
+    // First we generate the LFO buffer values using data from mOwner.
+    bool useLFOGraphs = mOwner.GetParam(iParamUseAutomationGraphs)->Bool();
+    if (useLFOGraphs) {
+        mGainGraph.ProcessBlock(mGainBuf.Get(), nFrames);
+        mPitchGraph.ProcessBlock(mPitchBuf.Get(), nFrames);
+        mDutyGraph.ProcessBlock(mDutyBuf.Get(), nFrames);
+    }
+    else {
+        set_buffer(mGainBuf.Get(), nFrames, sample(mOwner.GetParam(iParamVolumeEnvelope)->GetNormalized()));
+        double pitchVal = mOwner.GetParam(iParamPitchEnvelope)->Value() 
+            + mOwner.GetParam(iParamFineEnvelope)->Value();
+        set_buffer(mPitchBuf.Get(), nFrames, sample(pitchVal));
+        set_buffer(mDutyBuf.Get(), nFrames, sample(mOwner.GetParam(iParamDutyEnvelope)->GetNormalized()));
+    }
 
-    double gain = mADSR.Process(1) * mGain * mOwnerGain;
+    // Now update our buffers with values from the ADSR envelope and MIDI data
+    sample gain = sample(mADSR.Process(mSustain) * mGain);
+    sample* gainBuf = mGainBuf.Get();
+    double pitchOffset = pitch + pitchBend;
+    sample* pitchBuf = mPitchBuf.Get();
+    PARALLEL_FOR_LOOP
+    for (int i = 0; i < nFrames; i++) {
+        gainBuf[i] = gainBuf[i] * gain;
+        pitchBuf[i] = sample(PitchToHz(pitchBuf[i] + pitchOffset));
+    }
 
-    sample* outputs2[2];
-    sample_offset(outputs, outputs2, 2, startIdx);
-
-    ProcessSamples(oscFreq, gain, inputs, outputs2, nFrames);
-}
-
-void NESVoice::ProcessSamples(double oscFreq, double gain, sample** inputs, sample** outputs, int nFrames)
-{
-    // Normalize for triangle and square
-    double freqNorm = unlerp(20., 20000., oscFreq);
-    // Normalize "frequency" for the noise generator.
-    double freqNoise = double(mKey % 16) / 16.0;
+    sample* inputs2[] = { gainBuf, pitchBuf, mDutyBuf.Get() };
+    sample* outputs2[] = { outputs[0] + startIdx, outputs[1] + startIdx };
 
     switch (mShape) {
     case 0:
-        mFaustSquare.SetParameterValueNormalised(1, freqNorm);
-        mFaustSquare.SetParameterValue("gain", gain);
-        mFaustSquare.ProcessBlock(inputs, outputs, nFrames);
+        mFaustSquare.ProcessBlock(inputs2, outputs2, nFrames);
         break;
     case 1:
-        mFaustTriangle.SetParameterValueNormalised(0, freqNorm);
-        mFaustTriangle.SetParameterValue("gain", gain);
-        mFaustTriangle.ProcessBlock(inputs, outputs, nFrames);
+        mFaustTriangle.ProcessBlock(inputs2, outputs2, nFrames);
         break;
     case 2:
-        mNoise.SetParameter(1, freqNoise);
-        mNoise.SetParameter(3, gain);
-        mNoise.ProcessBlock(inputs, outputs, nFrames);
+        mNoise.ProcessBlock(inputs2, outputs2, nFrames);
         break;
     }
 }
@@ -87,6 +107,13 @@ void NESVoice::SetSampleRateAndBlockSize(double sampleRate, int blockSize)
     mFaustTriangle.SetSampleRate(sampleRate);
     mNoise.SetParameter(0, sampleRate);
     mADSR.SetSampleRate((sample)sampleRate);
+
+    mGainGraph.SetSampleRateAndBlockSize(sampleRate, blockSize);
+    mPitchGraph.SetSampleRateAndBlockSize(sampleRate, blockSize);
+    mDutyGraph.SetSampleRateAndBlockSize(sampleRate, blockSize);
+    mGainBuf.Resize((int)blockSize);
+    mPitchBuf.Resize((int)blockSize);
+    mDutyBuf.Resize(int(blockSize));
 }
 
 #endif

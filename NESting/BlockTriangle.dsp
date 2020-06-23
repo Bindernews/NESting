@@ -1,11 +1,6 @@
-
 import("stdfaust.lib");
 
-grGeneral(x) = hgroup("1", x);
-midifreq = grGeneral(hslider("freq[unit:Hz]", 440, 20, 20000, 1));
-midigain = grGeneral(hslider("gain", 0.5, 0, 1, 0.01));
-
-triangleValue = (rdtable(triWave,int(os.phasor(512,midifreq))) * 0.125) - 1.
+generate(gain, freq) = ((rdtable(triWave,int(os.phasor(512,freq))) * 0.125) - 1.) * gain
 with {
   // From https://www.mattmontag.com/nesvst/triangle_wavetable.txt
   triWave = waveform{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 
@@ -43,4 +38,4 @@ with {
 	7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
 };
 
-process = triangleValue * midigain;
+process = (_,_) : generate : _;

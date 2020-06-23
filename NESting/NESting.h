@@ -3,6 +3,8 @@
 #include "IPlug_include_in_plug_hdr.h"
 #include <heapbuf.h>
 #include <atomic>
+#include <vector>
+#include <memory>
 
 #if IPLUG_DSP
 #include "NESVoice.h"
@@ -15,8 +17,6 @@
 #define DSP_FILE ""
 #endif
 
-#define AUTOMATION_PANEL_HEIGHT (200)
-
 enum EControlTags
 {
   kCtrlTagScope = 0,
@@ -25,47 +25,110 @@ enum EControlTags
   kCtrlTagFreqOut,
   kCtrlAutomationGraphs,
   kCtrlStatus,
+  kCtrlVolumeGraph,
+  kCtrlDutyGraph = kCtrlVolumeGraph + 6,
+  kCtrlPitchGraph = kCtrlDutyGraph + 6,
+  kCtrlFineGraph = kCtrlPitchGraph + 6,
   kNumCtrlTags
 };
 
 
 enum EParam
 {
-	iParamShape = 0,
-	iParamGain,
-	iParamDuty,
-	iParamNoiseMode,
-	iParamUseAutomationGraphs,
+  iParamShape = 0,
+  iParamNoiseMode,
+  iParamAttack,
+  iParamDecay,
+  iParamSustain,
+  iParamRelease,
+  iParamUseAutomationGraphs,
 
-	iParamVolumeSteps,
-	iParamVolumeLoopPoint,
-	iParamVolumeTime,
-	iParamVolumeTempoSync,
+  iParamVolumeSteps,
+  iParamVolumeLoopPoint,
+  iParamVolumeTime,
+  iParamVolumeTempoSync,
+  iParamVolumeEnvelope,
 
-	iParamDutySteps,
-	iParamDutyLoopPoint,
-	iParamDutyTime,
-	iParamDutyTempoSync,
+  iParamDutySteps,
+  iParamDutyLoopPoint,
+  iParamDutyTime,
+  iParamDutyTempoSync,
+  iParamDutyEnvelope,
 
-	iParamPitchSteps,
-	iParamPitchLoopPoint,
-	iParamPitchTime,
-	iParamPitchTempoSync,
+  iParamPitchSteps,
+  iParamPitchLoopPoint,
+  iParamPitchTime,
+  iParamPitchTempoSync,
+  iParamPitchEnvelope,
 
-	kNumParams,
+  iParamFineSteps,
+  iParamFineLoopPoint,
+  iParamFineTime,
+  iParamFineTempoSync,
+  iParamFineEnvelope,
+
+  kNumParams,
 };
 
 using namespace iplug;
 using namespace igraphics;
+
+struct QMsg
+{
+  QMsg() : QMsg(0, nullptr, 0) {}
+  QMsg(int kind) : QMsg(kind, nullptr, 0) {}
+  QMsg(int kind, const char* msg) : QMsg(kind, (void*)msg, strlen(msg) + 1) {}
+
+  QMsg(int kind, void* data, int dataSize)
+  {
+    this->kind = kind;
+    mSize = dataSize;
+    if (data != nullptr) {
+      mData = new uint8_t[size_t(dataSize) + 1];
+      memcpy(mData, data, dataSize);
+    }
+  }
+  
+  template<typename T>
+  inline T* data_as() const { return reinterpret_cast<T*>(mData); }
+  inline void* data() const { return mData; }
+  inline int size() const { return mSize; }
+
+  /** Release the resources associated with this QMsg. THIS MUST BE CALLED.
+   * QMsg does NOT release resources by itself. */
+  void done()
+  {
+    if (mData != nullptr)
+    {
+      delete[] mData;
+      mData = nullptr;
+      mSize = 0;
+    }
+  }
+
+  int kind;
+
+private:
+  uint8_t* mData;
+  int mSize;
+};
 
 class NESting final : public Plugin
 {
 public:
   NESting(const InstanceInfo& info);
 
+
+private:
+  void initParams();
+
 #if IPLUG_EDITOR
 public:
-	void ShowAutomationGraphs(bool visible);
+  void ShowAutomationGraphs(bool visible);
+  void OnParamChangeUI(int paramIdx, const EParamSource source) override;
+
+private:
+  void buildUI(IGraphics *ui);
 #endif
 
 #if IPLUG_DSP
@@ -77,13 +140,20 @@ public:
   void OnIdle() override;
   bool OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData) override;
   void SendControlMsgFromDelegate(int ctrlTag, int msgTag, int dataSize, const void* pData) override;
+  bool SerializeState(IByteChunk& chunk) const override;
+  int UnserializeState(const IByteChunk& chunk, int startPos) override;
 
 private:
-	MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
-	WDL_TypedBuf<sample> mInputBuffer;
-	IBufferSender<2> mScopeSender;
-	ISender<4> mSender;
+  /** Initalize the presets */
+  void initPresets();
+  /** Helper function that returns our only NESVoice object. */
+  NESVoice* GetVoice() const;
 
-	friend class NESVoice;
-#endif
+  MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };
+  WDL_TypedBuf<sample> mInputBuffer;
+  IBufferSender<2> mScopeSender;
+  IPlugQueue<QMsg> mUIQueue;
+
+  friend class NESVoice;
+#endif // IPLUG_DSP
 };

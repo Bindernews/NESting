@@ -23,6 +23,7 @@ enum EControlTags
   kCtrlTagBender,
   kCtrlTagKeyboard,
   kCtrlTagFreqOut,
+  kCtrlBackground,
   kCtrlAutomationGraphs,
   kCtrlStatus,
   kCtrlVolumeGraph,
@@ -121,14 +122,23 @@ public:
 
 private:
   void initParams();
+  inline static int calcLoopPoint(double value, int numSteps)
+  {
+    return int(value * (double(numSteps) - 0.01));
+  }
 
 #if IPLUG_EDITOR
 public:
-  void ShowAutomationGraphs(bool visible);
+  void UpdateUISize();
   void OnParamChangeUI(int paramIdx, const EParamSource source) override;
 
 private:
+  /// Construct the UI elements with their correct, default positions.
   void buildUI(IGraphics *ui);
+  /// Adjust the position of UI elements as required.
+  void layoutUI(IGraphics* ui);
+  /// Returns the desired height of the GUI. This changes based on some parameters.
+  float getDesiredHeight();
 #endif
 
 #if IPLUG_DSP

@@ -7,6 +7,39 @@ find_package(Faust REQUIRED)
 
 #message("${CMAKE_GENERATOR}  ${CMAKE_GENERATOR_PLATFORM}  ${CMAKE_CXX_COMPILER_ID}")
 
+
+# Add the bson-cxx library
+set(sdk "${CMAKE_SOURCE_DIR}/../bson-cxx/src")
+set(_src
+    "${sdk}/bson/base64.h" 
+    "${sdk}/bson/base64.cpp"
+    "${sdk}/bson/bson.cpp"
+    "${sdk}/bson/bsonelement.h"
+    "${sdk}/bson/bsonobj.h"
+    "${sdk}/bson/bsonobjbuilder.h"
+    "${sdk}/bson/bsonobjiterator.h"
+    "${sdk}/bson/bsontypes.h"
+    "${sdk}/bson/builder.h"
+    "${sdk}/bson/endian.h"
+    "${sdk}/bson/errorcodes.h"
+    "${sdk}/bson/hex.h"
+    "${sdk}/bson/hex.cpp"
+    "${sdk}/bson/oid.h"
+    "${sdk}/bson/ordering.h"
+    "${sdk}/bson/parse_number.h"
+    "${sdk}/bson/parse_number.cpp"
+    "${sdk}/bson/status.h"
+    "${sdk}/bson/status_with.h"
+    "${sdk}/bson/string_data.h"
+)
+add_library(BsonCXX STATIC)
+iplug2_target_add(BsonCXX PUBLIC
+  INCLUDE ${sdk}
+  SOURCE ${_src}
+)
+source_group(TREE ${sdk} PREFIX "" FILES ${_src})
+
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(sdk "${CMAKE_SOURCE_DIR}")
@@ -24,6 +57,7 @@ set(SRC_FILES
     NESVoice.cpp
     NESting.h
     NESting.cpp
+    NESting_gui.cpp
     NESting_serialize.cpp
     LFOGraph.h
     LFOGraph.cpp
@@ -53,7 +87,7 @@ iplug2_target_add(_base INTERFACE
     ${FaustDSP_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/resources ${CMAKE_SOURCE_DIR}/resources/fonts
   DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED"
-  LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG
+  LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG BsonCXX
   DEPEND FaustDSP
 )
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")

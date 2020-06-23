@@ -3,6 +3,7 @@
 
 enum StateVersion {
   kStateV0 = 0x00000000,
+  kStateV1 = 0x00000001,
 };
 
 #define CURRENT_VERSION kStateV0

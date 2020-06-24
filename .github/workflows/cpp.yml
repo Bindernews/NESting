@@ -35,9 +35,11 @@ jobs:
       - name: Create zip
         run: |
           powershell "Compress-Archive -Path build/out/NESting.vst3 NESting-vst3.zip"
-      - name: Get message
-        run: |
-          @SET /P MSG_BODY=< CHANGELOG.txt
+      - name: Get changelog
+        uses: pCYSl5EDgo/cat@master
+        id: get_changelog
+        with:
+          path: CHANGELOG.md
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -46,7 +48,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ env.MSG_BODY }}
+          body: ${{ steps.get_changelog.outputs.text }}
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1

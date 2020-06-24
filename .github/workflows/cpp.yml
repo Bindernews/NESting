@@ -3,8 +3,8 @@ name: C++ CI
 on:
   push:
     branches: [ master ]
-    tags:
-      - 'v*' # Only do this when we tag a release (e.g. v0.3, v1.2)
+#    tags:
+#      - 'v*' # Only do this when we tag a release (e.g. v0.3, v1.2)
 
 jobs:
   release-win:

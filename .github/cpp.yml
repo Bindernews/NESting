@@ -1,0 +1,53 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Build
+      run: |
+        cmake -S NESting -B build -G "Visual Studio 16 2019"
+        cmake --build build --config Release --target NESting-vst3
+        - name: Create release
+
+  release-win:
+    runs-on: windows-latest
+    needs: [build-win]
+    steps:
+    - name: Create GitHub release
+      uses: Roang-zero1/github-upload-release-artifacts-action@master
+      with:
+        args:
+        - build/out/NESting.vst3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Build
+      run: |
+        cmake -S NESting -B build -G "Xcode"
+        cmake --build build --config Release --target NESting-vst3
+
+  release-mac:
+    runs-on: macos-latest
+    needs: [build-mac]
+    steps:
+    - name: Create GitHub release
+      uses: Roang-zero1/github-upload-release-artifacts-action@master
+      with:
+        args:
+        - build/out/NESting.vst3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

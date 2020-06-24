@@ -14,6 +14,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Get VST3 SDK
+        run: |
+          powershell "Invoke-WebRequest https://www.steinberg.net/vst3sdk -OutFile vst3sdk.zip"
+          powershell "Expand-Archive vst3sdk.zip"
+          powershell "Remove-Item -Recurse -Force iPlug2/Dependencies/IPlug/VST3_SDK"
+          powershell "Move-Item vst3sdk/VST_SDK/VST3_SDK -Destination iPlug2/Dependencies/IPlug/" 
       - name: Build
         run: |
           cmake -S NESting -B build -G "Visual Studio 16 2019"
@@ -44,41 +50,41 @@ jobs:
           asset_name: NESting-vst3-win-x64.zip
           asset_content_type: application/zip
 
-  release-mac:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Build
-        run: |
-          cmake -S NESting -B build -G "Xcode"
-          cmake --build build --config Release --target NESting-vst3
-      - name: Create zip
-        run: |
-          pushd build/Release
-          7z a ../../NESting-vst3.zip NESting.vst3
-          popd
-      - name: Get message
-        run: |
-          export MSG_BODY="$(cat CHANGELOG.txt)"
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ env.MSG_BODY }}
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./NESting-vst3.zip
-          asset_name: NESting-vst3-mac-x64.zip
-          asset_content_type: application/zip
+  # release-mac:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #       with:
+  #         submodules: true
+  #     - name: Build
+  #       run: |
+  #         cmake -S NESting -B build -G "Xcode"
+  #         cmake --build build --config Release --target NESting-vst3
+  #     - name: Create zip
+  #       run: |
+  #         pushd build/Release
+  #         7z a ../../NESting-vst3.zip NESting.vst3
+  #         popd
+  #     - name: Get message
+  #       run: |
+  #         export MSG_BODY="$(cat CHANGELOG.txt)"
+  #     - name: Create release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Release ${{ github.ref }}
+  #         body: ${{ env.MSG_BODY }}
+  #     - name: Upload Release Asset
+  #       id: upload-release-asset 
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+  #         asset_path: ./NESting-vst3.zip
+  #         asset_name: NESting-vst3-mac-x64.zip
+  #         asset_content_type: application/zip

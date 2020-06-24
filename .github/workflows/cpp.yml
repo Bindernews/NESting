@@ -16,12 +16,20 @@ jobs:
           submodules: true
       - name: Get VST3 SDK
         run: |
-          powershell "Invoke-WebRequest https://www.steinberg.net/vst3sdk -OutFile vst3sdk.zip"
-          powershell "Expand-Archive vst3sdk.zip"
+          powershell "mkdir VST3_SDK"
+          git clone --depth=1 https://github.com/steinbergmedia/vst3_pluginterfaces.git VST3_SDK/pluginterfaces
+          git clone --depth=1 https://github.com/steinbergmedia/vst3_public_sdk.git VST3_SDK/public.sdk
+          git clone --depth=1 https://github.com/steinbergmedia/vst3_base.git VST3_SDK/base
           powershell "Remove-Item -Recurse -Force iPlug2/Dependencies/IPlug/VST3_SDK"
-          powershell "Move-Item vst3sdk/VST_SDK/VST3_SDK -Destination iPlug2/Dependencies/IPlug/" 
-      - name: Build
+          powershell "Move-Item VST3_SDK -Destination iPlug2/Dependencies/IPlug/" 
+      - name: Install faust
         run: |
+          powershell "Invoke-WebRequest -Uri https://github.com/grame-cncm/faust/releases/download/2.14.4/Faust-2.14.4-win64.exe -OutFile FaustInstall.exe"
+          powershell ".\FaustInstall.exe /S"
+      - name: Build
+        # We currently have to run cmake twice, for reasons.
+        run: |
+          cmake -S NESting -B build -G "Visual Studio 16 2019"
           cmake -S NESting -B build -G "Visual Studio 16 2019"
           cmake --build build --config Release --target NESting-vst3
       - name: Create zip

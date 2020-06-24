@@ -117,13 +117,6 @@ int NESting::UnserializeState(const IByteChunk& chunk, int startPos)
     mUIQueue.Push(QMsg(1, "Error: Invalid preset"));
     return pos;
   }
-
-
-  
-
-  
-
-  
 }
 
 

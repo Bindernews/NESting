@@ -68,6 +68,8 @@ set(SRC_FILES
     gui/IVDropdownMenuControl.cpp
     gui/LFOGraphControl.h
     gui/LFOGraphControl.cpp
+    presets/presets.h
+    presets/presets.cpp
     ${RES_FILES}
 )
 
@@ -128,5 +130,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   </PropertyGroup>
 </Project>]=] _text)
   file(WRITE "${CMAKE_BINARY_DIR}/NESting-vst3.vcxproj.user" "${_text}")
+  file(WRITE "${CMAKE_BINARY_DIR}/NESting-vst2.vcxproj.user" "${_text}")
 endif()
 

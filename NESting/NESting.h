@@ -17,6 +17,8 @@
 #define DSP_FILE ""
 #endif
 
+const int kNumPresets = 3;
+
 enum EControlTags
 {
   kCtrlTagScope = 0,

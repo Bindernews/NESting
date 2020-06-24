@@ -7,6 +7,7 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+#include "presets/presets.h"
 
 ///////////////
 // Constants //
@@ -32,14 +33,13 @@ const double TEMPO_DIVISION_VALUES[TEMPO_LIST_SIZE] = {
 //////////////////////
 
 NESting::NESting(const InstanceInfo& info)
-: Plugin(info, MakeConfig(kNumParams, 1)),
+: Plugin(info, MakeConfig(kNumParams, kNumPresets)),
   mUIQueue(20)
 {
     initParams();
 
 #if IPLUG_DSP
     mSynth.AddVoice(new NESVoice(*this), 0);
-    initPresets();
 #endif
   
 #if IPLUG_EDITOR
@@ -48,6 +48,8 @@ NESting::NESting(const InstanceInfo& info)
     };
     mLayoutFunc = [this](IGraphics* ui) { layoutUI(ui); };
 #endif
+
+    initPresets();
 }
 
 
@@ -296,6 +298,14 @@ void NESting::OnIdle()
 
 void NESting::initPresets()
 {
+  for (int i = 0; PRESET_LIST[i].data; i++) {
+    const rp_preset_t& pre = PRESET_LIST[i];
+    mPresets.Add(new IPreset());
+    IByteChunk chunk;
+    chunk.Resize(pre.size);
+    chunk.PutBytes(pre.data, pre.size);
+    MakePresetFromChunk(pre.name, chunk);
+  }
 }
 
 NESVoice* NESting::GetVoice() const

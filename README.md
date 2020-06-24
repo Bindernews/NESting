@@ -16,8 +16,14 @@ will be built using [iPlug2](https://github.com/iPlug2/iPlug2).
 # Progress
 * Square wave - done
 * Triangle wave - done
-* Noise - trying to figure it out
+* Noise - done
 * DPCM - not started yet
-* UI - not started yet
+* UI - needs improvement
+
+# Known Bugs
+* There is no default preset and reset to factory settings does nothing
+* Fine pitch does nothing
+* Tempo-sync isn't quite correct
+* UI doesn't refresh when loading a preset
 
 [nes-vst]: https://www.mattmontag.com/projects-page/nintendo-vst

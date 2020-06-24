@@ -7,7 +7,6 @@
 #include <vector>
 #include <array>
 #include <algorithm>
-#include <execution>
 
 ///////////////
 // Constants //

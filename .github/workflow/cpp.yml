@@ -48,6 +48,6 @@ jobs:
       uses: Roang-zero1/github-upload-release-artifacts-action@master
       with:
         args:
-        - build/out/NESting.vst3
+        - build/Release/NESting.vst3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

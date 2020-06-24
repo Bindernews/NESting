@@ -13,7 +13,7 @@ class slice
 public:
 	typedef T Ty;
 
-	slice() : this(nullptr, 0) {};
+	slice() : slice(nullptr, 0) {};
 	slice(T* ptr, size_t size) : _data(ptr), _len(size) {}
 	slice(const T* ptr, size_t size) : _data(ptr), _len(size) {}
 

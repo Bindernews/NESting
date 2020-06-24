@@ -1,9 +1,14 @@
 #pragma once
 #include <cmath>
 
+#ifndef NO_OPENMP
 #define PARALLEL_FOR_LOOP __pragma(omp parallel for)
 //#define SIMD_FOR_LOOP __pragma(omp declare simd)
 #define SIMD_FOR_LOOP
+#else
+#define PARALLEL_FOR_LOOP
+#define SIMD_FOR_LOOP
+#endif
 
 template<typename T>
 static inline T unlerp(T low, T high, T x) { return (x - low) / (high - low); }

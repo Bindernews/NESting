@@ -94,7 +94,7 @@ iplug2_target_add(_base INTERFACE
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   target_compile_options(_base INTERFACE "/openmp" "/std:c++17" "/MT$<$<CONFIG:Debug>:d>")
 else()
-  target_compile_options(_base INTERFACE "-openmp" "-std=c++17")
+  iplug2_target_add(_base INTERFACE DEFINE "NO_OPENMP")
 endif()
 
 add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})

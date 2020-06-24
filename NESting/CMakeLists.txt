@@ -92,7 +92,9 @@ iplug2_target_add(_base INTERFACE
   DEPEND FaustDSP
 )
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options(_base INTERFACE "/openmp" "/std:c++17")
+  target_compile_options(_base INTERFACE "/openmp" "/std:c++17" "/MT$<$<CONFIG:Debug>:d>")
+else()
+  target_compile_options(_base INTERFACE "-openmp" "-std=c++17")
 endif()
 
 add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})

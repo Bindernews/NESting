@@ -93,6 +93,8 @@ int LFOGraphControl::ProcessGraphClick(float x, float y, const IMouseMod& mod)
 		// Return the clicked index
 		return barIndex;
 	}
+	// If all else fails, we didn't do anything, so return -1.
+	return -1;
 }
 
 void LFOGraphControl::DrawBars(IGraphics& g, const IRECT& bounds)

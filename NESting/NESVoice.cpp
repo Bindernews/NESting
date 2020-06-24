@@ -3,9 +3,15 @@
 #include "math_utils.h"
 #include "constants.h"
 
+#include "FaustSquare.hpp"
+#include "FaustTriangle.hpp"
+#include "IPlugFaustGen.h"
+
 #if IPLUG_DSP
 NESVoice::NESVoice(NESting& owner) 
     : mOwner(owner), mADSR("gain", [&]() { mNoise.OnRelease(); }),
+      mFaustSquare(*new Faust_Square("Square", "", 1, 1)),
+      mFaustTriangle(*new Faust_Triangle("Triangle", "", 1, 1)),
       mGainGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_VOLUME),
       mPitchGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_PITCH),
       mDutyGraph(MAX_LFO_GRAPH_STEPS, DEFAULT_ENV_DUTY),
@@ -24,6 +30,8 @@ NESVoice::NESVoice(NESting& owner)
 
 NESVoice::~NESVoice()
 {
+  delete& mFaustSquare;
+  delete& mFaustTriangle;
 }
 
 bool NESVoice::GetBusy() const

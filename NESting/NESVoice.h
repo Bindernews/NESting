@@ -4,14 +4,13 @@
 #include "MidiSynth.h"
 #include "APUNoise.h"
 #include "ADSREnvelope.h"
-#include "FaustSquare.hpp"
-#include "FaustTriangle.hpp"
-#include "IPlugFaustGen.h"
 #include "LFOGraph.h"
 
 using namespace iplug;
 
 class NESting;
+class Faust_Square;
+class Faust_Triangle;
 
 class NESVoice : public SynthVoice
 {
@@ -31,8 +30,8 @@ public:
 private:
     int mShape = 0;
     NESting& mOwner;
-    FAUST_BLOCK(Square, mFaustSquare, "", 1, 1);
-    FAUST_BLOCK(Triangle, mFaustTriangle, "", 1, 1);
+    Faust_Square& mFaustSquare;
+    Faust_Triangle& mFaustTriangle;
     APUNoise mNoise;
     ADSREnvelope<sample> mADSR;
     float mSustain;

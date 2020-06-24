@@ -49,6 +49,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: ${{ steps.get_changelog.outputs.text }}
+          prerelease: true
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1

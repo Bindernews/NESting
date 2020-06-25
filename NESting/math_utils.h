@@ -24,9 +24,22 @@ static inline T clampf(T low, T high, T x)
     return x;
 }
 
-inline static double make_stepped(double value, double step)
+/** @brief Constrain a value in the range [0, 1] to be a multiple of \c step
+ * @param value Value to step
+ * @param nSteps How many different steps are there
+ */
+inline static double make_stepped(double value, double nSteps)
 {
-    return std::round(value / step) * step;
+    return std::round(value * nSteps) / nSteps;
+}
+
+/** @brief Constrain a value in the range [0, 1] to be a multiple of \c step
+ * @param value Value to step
+ * @param step Value in range (0, 1] to act as the step value
+ */
+inline static float make_stepped(float value, float nSteps)
+{
+    return std::round(value * nSteps) / nSteps;
 }
 
 /** @brief Convert a normalized double into an integer such that all integer values are (mostly) equally represented.

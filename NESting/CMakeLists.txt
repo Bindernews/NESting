@@ -72,6 +72,7 @@ set(SRC_FILES
     presets/presets.cpp
     ${RES_FILES}
 )
+source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${SRC_FILES})
 
 # Have to do this first, so we can include these files in all other targets.
 add_faust_target(FaustDSP

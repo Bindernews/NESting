@@ -9,21 +9,20 @@ LFOGraphControl::LFOGraphControl(const IRECT& bounds, int maxSteps, float defaul
 	: IControl(bounds), IVectorBase(style, false, false)
 {
 	AttachIControl(this, label);
-	mNumSteps = 0;
-	mIsContinuous = false;
+	mNumSteps = 1;
+  mNumBars = 0;
 	mDefaultValue = defaultValue;
 	mValues.resize(maxSteps, defaultValue);
-	mStops.resize(0);
-	mLabelWidth = -1.f;
 	mLoopPoint = 1.0f;
+  mDisplayFn = [](float value, WDL_String& msg) { msg.SetFormatted(20, "%.2f", value); };
 	
 	iStyle.barColor = COLOR_RED;
 	iStyle.padding = 8.f;
 	iStyle.labelWidth = 30.f;
 	iStyle.labelPadding = 6.f;
 
-	mStyle.labelText.mAlign = EAlign::Far;
-	mStyle.labelText.mVAlign = EVAlign::Middle;
+	mStyle.labelText.mAlign = EAlign::Center;
+	mStyle.labelText.mVAlign = EVAlign::Top;
 }
 
 LFOGraphControl::~LFOGraphControl()
@@ -39,40 +38,32 @@ void LFOGraphControl::Draw(IGraphics& g)
 
 void LFOGraphControl::DrawWidget(IGraphics& g)
 {
-	// Check if we need to recalc our max label width
-	if (mLabelWidth == -1.f) {
-		IRECT lblBounds;
-		float maxWidth = 0.f;
-		for (int i = 0; i < mStops.size(); i += 1) {
-			auto stop = mStops[i];
-			g.MeasureText(mStyle.labelText, stop.label, lblBounds);
-			maxWidth = std::max(maxWidth, lblBounds.W());
-		}
-		mLabelWidth = maxWidth;
-	}
-	
-	// Start by drawing the scale to the left
-	IRECT textBounds = mRECT.GetPadded(-iStyle.padding);
-	for (int i = 0; i < mStops.size(); i += 1) {
-		auto stop = mStops[i];
-		if (stop.label) {
-			float y = textBounds.B - int(stop.value * textBounds.H());
-			g.DrawText(mStyle.labelText, stop.label, textBounds.L + iStyle.labelWidth, y);
-		}
-	}
-
 	// Now draw the bars
-	mBarBounds = textBounds;
-	mBarBounds.L += iStyle.labelWidth + iStyle.labelPadding;
+  mBarBounds = mRECT.GetPadded(-iStyle.padding);
+  mBarBounds.B -= iStyle.padding;
 	DrawBars(g, mBarBounds);
 
 	// Finally draw the loop point indicator
-	IRECT loopBox = mBarBounds.SubRectHorizontal(mNumSteps, mLoopPoint);
+	IRECT loopBox = mBarBounds.SubRectHorizontal(mNumBars, mLoopPoint);
 	loopBox.T = mRECT.T;
 	loopBox.B = mRECT.T - 1.f;
 	loopBox.R = mBarBounds.R;
 	g.FillRect(iStyle.barColor, loopBox);
 
+  // Draw the value at the current mouse position
+  if (mMouseIsOver) {
+    float mX, mY;
+    GetUI()->GetMouseLocation(mX, mY);
+    float bVal;
+    int bar = GetValueAt(mX, mY, bVal);
+    if (bar != -1) {
+      IRECT place = mBarBounds.SubRectHorizontal(mNumBars, bar);
+      mDisplayFn(bVal, mDisplayStr);
+      g.DrawText(mStyle.labelText, mDisplayStr.Get(), place.MW(), place.B + 2.f);
+    }
+    // If the mouse is over us, we have to update every frame
+    SetDirty();
+  }
 }
 
 int LFOGraphControl::ProcessGraphClick(float x, float y, const IMouseMod& mod)
@@ -85,10 +76,8 @@ int LFOGraphControl::ProcessGraphClick(float x, float y, const IMouseMod& mod)
 	}
 	// We only respond to left-clicks.
 	if (mod.L) {
-		// Determine bar to set value for
-		int barIndex = int(lerp(0.f, float(mNumSteps), unlerp(mBarBounds.L, mBarBounds.R, x)));
-		// Determine the new bar value
-		float barValue = 1.f - clampf(0.f, 1.f, unlerp(mBarBounds.T, mBarBounds.B, y));
+    float barValue;
+    int barIndex = this->GetValueAt(x, y, barValue);
 		SetBarValue(barIndex, barValue);
 		// Return the clicked index
 		return barIndex;
@@ -102,7 +91,7 @@ void LFOGraphControl::DrawBars(IGraphics& g, const IRECT& bounds)
 	if (mNumSteps == 0) {
 		return;
 	}
-	IRECT box0 = bounds.SubRectHorizontal(mNumSteps, 0);
+	IRECT box0 = bounds.SubRectHorizontal(mNumBars, 0);
 
 	// Take our bar color and lighten it slightly for the ending bar color
 	float h, s, l, a;
@@ -112,7 +101,7 @@ void LFOGraphControl::DrawBars(IGraphics& g, const IRECT& bounds)
 
 	g.PathTransformSave();
 	auto gradient = IPattern::CreateLinearGradient(box0, EDirection::Horizontal, { IColorStop(iStyle.barColor, 0.f), IColorStop(barColor1, 1.f) });
-	for (int i = 0; i < mNumSteps; i += 1) {
+	for (int i = 0; i < mNumBars; i += 1) {
 		// For drawing purposes we at least make a tiny bar
 		float val = std::max(mValues[i], 0.01f);
 		IRECT bound = box0.FracRectVertical(val, false);
@@ -123,32 +112,30 @@ void LFOGraphControl::DrawBars(IGraphics& g, const IRECT& bounds)
 	g.PathTransformRestore();
 }
 
+int LFOGraphControl::GetValueAt(float x, float y, float& out_value) const
+{
+    // Make sure the mouse is within the bar graph area, with a little allowance on the top and bottom.
+    float allowed = iStyle.padding / 2.f;
+    IRECT mouseBounds = mBarBounds.GetAltered(0., -allowed, 0., allowed);
+    if (!mouseBounds.ContainsEdge(x, y)) {
+        return -1;
+    }
+
+    // Determine bar to set value for
+    int barIndex = int(lerp(0.f, float(mNumBars), unlerp(mBarBounds.L, mBarBounds.R, x)));
+    // Determine the new bar value
+    float barValue = 1.f - clampf(0.f, 1.f, unlerp(mBarBounds.T, mBarBounds.B, y));
+    if (mNumSteps == 0) {
+        out_value = barValue;
+    }
+    else {
+        out_value = make_stepped(barValue, float(mNumSteps));
+    }
+    return barIndex;
+}
+
 void LFOGraphControl::SetBarValue(int index, float value, bool updateDSP)
 {
-	// Convert it to be one of the stop values if necessary.
-	if (!mIsContinuous) {
-		// Find the two closest stop points.
-		float stopL = 0;
-		float stopH = 1;
-		for (size_t i = 0; i < mStops.size(); i++) {
-			if (mStops[i].value >= value) {
-				stopH = mStops[i].value;
-				if (i > 0) {
-					stopL = mStops[i - 1].value;
-				}
-				break;
-			}
-		}
-		// Now that we have our max and min, decide which to round towards
-		float halfPoint = (stopL + stopH) / 2.f;
-		// Round down if it's exactly in the middle
-		if (value <= halfPoint) {
-			value = stopL;
-		}
-		else {
-			value = stopH;
-		}
-	}
 	// Now that we've determined our new value, only change it if it's different.
 	if (mValues[index] != value) {
 		mValues[index] = value;
@@ -174,26 +161,33 @@ void LFOGraphControl::OnMouseDown(float x, float y, const IMouseMod& mod)
 
 void LFOGraphControl::OnMouseDblClick(float x, float y, const IMouseMod& mod)
 {
-	int barIndex = ProcessGraphClick(x, y, mod);
+    float nvalue;
+	int barIndex = GetValueAt(x, y, nvalue);
 	if (barIndex != -1) {
 		SetBarValue(barIndex, mDefaultValue, true);
 	}
 }
 
-void LFOGraphControl::SetSteps(int steps)
+void LFOGraphControl::SetNumSteps(int steps)
 {
-	if (steps < 1 || steps > mValues.size()) { return; }
-	if (mNumSteps == steps) { return; }
-	mNumSteps = steps;
-	SetDirty(false);
+    mNumSteps = steps;
+    SetDirty(false);
 }
 
-void LFOGraphControl::SetStops(const bn::slice<LabelPoint> l)
+void LFOGraphControl::SetNumBars(int steps)
 {
-	mStops.assign(l.data(), l.data() + l.len());
+	if (steps < 1 || steps > mValues.size()) { return; }
+	if (mNumBars == steps) { return; }
+	mNumBars = steps;
+	SetDirty(false);
 }
 
 bn::slice<float> LFOGraphControl::GetBarValues() const
 {
 	return bn::slice(mValues.data(), mValues.size());
+}
+
+void LFOGraphControl::SetDisplayFn(DisplayMessageCallback cb)
+{
+    mDisplayFn = cb;
 }

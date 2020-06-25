@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "bson/bsonobjbuilder.h"
 #include "bson/bsonobjiterator.h"
+#include "wdl_base64.h"
 
 using namespace _bson;
 
@@ -46,6 +47,12 @@ bool NESting::SerializeState(IByteChunk& chunk) const
   uint32_t bsonSize = bob.objsize();
   saveOk &= (chunk.Put(&bsonSize) > 0);
   saveOk &= (chunk.PutBytes(bob.objdata(), bob.objsize()) > 0);
+
+
+  WDL_TypedBuf<char> b64_buf;
+  b64_buf.Resize(chunk.Size() * 2);
+  wdl_base64encode(chunk.GetData(), b64_buf.Get(), chunk.Size());
+  DBGMSG("Chunk: %s\n", b64_buf.Get());
 
   return saveOk;
 }

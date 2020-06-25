@@ -109,7 +109,7 @@ iplug2_configure_target(NESting-vst2 vst2)
 
 add_library(NESting-vst3 MODULE ${SRC_FILES})
 iplug2_target_add(NESting-vst3 PUBLIC 
-  DEFINE "VST3_NUM_CC_CHANS=0" 
+  DEFINE "VST3_NUM_CC_CHANS=0" "VST3_PRESET_LIST"
   LINK iPlug2_VST3 _base 
   RESOURCE ${RES_FILES}
 )

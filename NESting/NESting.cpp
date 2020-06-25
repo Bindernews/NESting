@@ -301,7 +301,6 @@ void NESting::initPresets()
   for (int i = 0; i < PRESET_LIST_SIZE; i++) {
     const rp_preset_t& pre = PRESET_LIST[i];
     IByteChunk chunk;
-    chunk.Resize(pre.size);
     chunk.PutBytes(pre.data, pre.size);
     MakePresetFromChunk(pre.name, chunk);
   }

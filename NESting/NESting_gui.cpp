@@ -225,7 +225,6 @@ void NESting::buildUI(IGraphics* ui)
     dynamic_cast<IVKeyboardControl*>(ui->GetControlWithTag(kCtrlTagKeyboard))->SetNoteFromMidi(msg.NoteNumber(), msg.StatusMsg() == IMidiMsg::kNoteOn);
     });
 #endif
-
   
 }
 

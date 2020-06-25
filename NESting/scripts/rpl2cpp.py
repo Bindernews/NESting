@@ -69,6 +69,8 @@ def process(input_file, output_name, output_dir, prefix, list_name):
     p_data = re.sub(SPACE_PATTERN, '', m.group(2))
     # p_data is base64-encoded, fix that
     b_data = b64decode(p_data)
+    # Reaper adds 52 bytes of header data
+    b_data = b_data[52:]
 
     # Now write out the data as const char*
     # First we create the declaration and the name

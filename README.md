@@ -26,4 +26,11 @@ will be built using [iPlug2](https://github.com/iPlug2/iPlug2).
 * Tempo-sync isn't quite correct
 * UI doesn't refresh when loading a preset
 
+# To Do
+* Add more presets
+* Make fine pitch actually do something
+* Fix automatic MacOS builds
+* Add preset manager UI
+* Add Audio Unit support
+
 [nes-vst]: https://www.mattmontag.com/projects-page/nintendo-vst

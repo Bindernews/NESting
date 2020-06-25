@@ -13,7 +13,8 @@ LFOGraphControl::LFOGraphControl(const IRECT& bounds, int maxSteps, float defaul
   mNumBars = 0;
 	mDefaultValue = defaultValue;
 	mValues.resize(maxSteps, defaultValue);
-	mLoopPoint = 1.0f;
+  mLoopStart = 1.0f;
+  mLoopEnd = 1.0f;
   mDisplayFn = [](float value, WDL_String& msg) { msg.SetFormatted(20, "%.2f", value); };
 	
 	iStyle.barColor = COLOR_RED;
@@ -44,7 +45,7 @@ void LFOGraphControl::DrawWidget(IGraphics& g)
 	DrawBars(g, mBarBounds);
 
 	// Finally draw the loop point indicator
-	IRECT loopBox = mBarBounds.SubRectHorizontal(mNumBars, mLoopPoint);
+	IRECT loopBox = mBarBounds.SubRectHorizontal(mNumBars, mLoopStart);
 	loopBox.T = mRECT.T;
 	loopBox.B = mRECT.T - 1.f;
 	loopBox.R = mBarBounds.R;

@@ -2,7 +2,7 @@ name: C++ CI
 
 on:
   push:
-    branches: [ master ]
+    #branches: [ master ]
     tags:
       - 'v*' # Only do this when we tag a release (e.g. v0.3, v1.2)
 
@@ -41,7 +41,6 @@ jobs:
         with:
           path: CHANGELOG.md
       - name: Create release
-        if: ${{ github.ref != "refs/heads/master" }}
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -96,7 +95,6 @@ jobs:
         with:
           path: CHANGELOG.md
       - name: Create release
-        if: ${{ github.ref != "refs/heads/master" }}
         id: create_release
         uses: actions/create-release@v1
         env:

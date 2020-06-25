@@ -86,14 +86,14 @@ def process(input_file, output_name, output_dir, prefix, list_name):
   # Write an empty line
   out_fd.write('\n')
   # Write the preset list header
-  out_fd.write('const %s %s[%d] = {\n' % (list_struct_name, list_name, len(preset_info) + 1))
+  out_fd.write('const %s %s[%d] = {\n' % (list_struct_name, list_name, len(preset_info)))
   # Write each value in the preset list
   indent_str = ' ' * INDENTATION
   for preset in preset_info:
     msg = '%s("%s", %s, %d),\n' % (list_struct_name, preset.name, preset.c_name, preset.size)
     out_fd.write(indent_str + msg)
-  # For our final "preset" we write one will all 0 values. This indicates the end of the list.
-  out_fd.write(indent_str + '%s(NULL, NULL, 0),\n};' % (list_struct_name))
+  # Write the closing brace
+  out_fd.write('};\n')
   out_fd.close()
 
   # Write the header file
@@ -103,7 +103,8 @@ def process(input_file, output_name, output_dir, prefix, list_name):
     fd.write('\n')
     for preset in preset_info:
       fd.write('extern const uint8_t {}[{}];\n'.format(preset.c_name, preset.size))
-    fd.write('extern const {} {}[{}];\n'.format(list_struct_name, list_name, len(preset_info) + 1))
+    fd.write('extern const {} {}[{}];\n'.format(list_struct_name, list_name, len(preset_info)))
+    fd.write('#define {}_SIZE ({})\n'.format(list_name, len(preset_info)))
     fd.write('\n')
 
 def main(argv):

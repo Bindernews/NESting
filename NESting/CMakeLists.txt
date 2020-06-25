@@ -108,11 +108,14 @@ iplug2_target_add(NESting-vst2 PUBLIC LINK iPlug2_VST2 _base RESOURCE ${RES_FILE
 iplug2_configure_target(NESting-vst2 vst2)
 
 add_library(NESting-vst3 MODULE ${SRC_FILES})
-iplug2_target_add(NESting-vst3 PUBLIC DEFINE "VST3_NUM_CC_CHANS=0" LINK iPlug2_VST3 _base RESOURCE ${RES_FILES})
+iplug2_target_add(NESting-vst3 PUBLIC 
+  DEFINE "VST3_NUM_CC_CHANS=0" 
+  LINK iPlug2_VST3 _base 
+  RESOURCE ${RES_FILES}
+)
 iplug2_configure_target(NESting-vst3 vst3)
 
 source_group("Resources" FILES ${RES_FILES})
-source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${SRC_FILES})
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(REAPER_PATH "C:\\Program Files\\REAPER (x64)\\reaper.exe")

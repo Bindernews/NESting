@@ -33,7 +33,7 @@ const double TEMPO_DIVISION_VALUES[TEMPO_LIST_SIZE] = {
 //////////////////////
 
 NESting::NESting(const InstanceInfo& info)
-: Plugin(info, MakeConfig(kNumParams, kNumPresets)),
+: Plugin(info, MakeConfig(kNumParams, PRESET_LIST_SIZE + 1)),
   mUIQueue(20)
 {
     initParams();
@@ -298,9 +298,8 @@ void NESting::OnIdle()
 
 void NESting::initPresets()
 {
-  for (int i = 0; PRESET_LIST[i].data; i++) {
+  for (int i = 0; i < PRESET_LIST_SIZE; i++) {
     const rp_preset_t& pre = PRESET_LIST[i];
-    mPresets.Add(new IPreset());
     IByteChunk chunk;
     chunk.Resize(pre.size);
     chunk.PutBytes(pre.data, pre.size);

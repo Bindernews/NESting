@@ -10,5 +10,6 @@ struct rp_preset_t {
 extern const uint8_t PRESET_Default[1395];
 extern const uint8_t PRESET_Creepy_Square[1401];
 extern const uint8_t PRESET_Running[1395];
-extern const rp_preset_t PRESET_LIST[4];
+extern const rp_preset_t PRESET_LIST[3];
+#define PRESET_LIST_SIZE (3)
 

@@ -1,11 +1,11 @@
+#include "FaustSquare.hpp"
+#include "FaustTriangle.hpp"
+#include "IPlugFaustGen.h"
+
 #include "NESVoice.h"
 #include "NESting.h"
 #include "math_utils.h"
 #include "constants.h"
-
-#include "FaustSquare.hpp"
-#include "FaustTriangle.hpp"
-#include "IPlugFaustGen.h"
 
 #if IPLUG_DSP
 NESVoice::NESVoice(NESting& owner) 

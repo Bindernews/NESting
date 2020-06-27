@@ -1,5 +1,5 @@
 import("stdfaust.lib");
-declare options "[nvoices:4]";
+//declare options "[nvoices:4]";
 
 generate(gain, freq) = ((rdtable(triWave,int(os.phasor(512,freq))) * 0.125) - 1.) * gain
 with {

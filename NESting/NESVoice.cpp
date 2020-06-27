@@ -28,7 +28,7 @@ NESVoice::NESVoice(NESting& owner)
   mNoise.Reset();
 
   // Set graph-specifc variables.
-  mPitchGraph.SetRange(PITCH_LOW, PITCH_HIGH);
+  mPitchGraph.SetRange(-1.0f, 1.0f);
   mGainGraph.mZeroValue = 0.0f;
 }
 

@@ -1,5 +1,5 @@
 import("stdfaust.lib");
-declare options "[nvoices:4]";
+//declare options "[nvoices:4]";
 
 generate(gain, freq, duty_cycle) = (saw1 + saw2) * gain
 with {

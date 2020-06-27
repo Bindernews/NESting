@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+cmake_policy(SET CMP0091 NEW)
 project(NESting VERSION 1.0.0 LANGUAGES CXX)
 
-set(iPlug2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../iPlug2)
-find_package(iPlug2 REQUIRED)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+include(${CMAKE_SOURCE_DIR}/../iPlug2/iplug2.cmake)
 find_package(Faust REQUIRED)
+find_package(iPlug2 REQUIRED)
+
 
 #message("${CMAKE_GENERATOR}  ${CMAKE_GENERATOR_PLATFORM}  ${CMAKE_CXX_COMPILER_ID}")
 
@@ -92,14 +96,14 @@ iplug2_target_add(_base INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR} 
     ${FaustDSP_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/resources ${CMAKE_SOURCE_DIR}/resources/fonts
-  DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED"
+  DEFINE "SAMPLE_TYPE_FLOAT" "FAUST_COMPILED" "$<$<CONFIG:Debug>:DEBUG>"
   LINK iPlug2_Synth iPlug2_Faust iPlug2_GL3 iPlug2_NANOVG BsonCXX
   DEPEND FaustDSP
 )
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options(_base INTERFACE "/openmp" "/std:c++17" "/MT$<$<CONFIG:Debug>:d>")
+  target_compile_options(_base INTERFACE "/std:c++17" "/MT$<$<CONFIG:Debug>:d>")
 else()
-  iplug2_target_add(_base INTERFACE DEFINE "NO_OPENMP")
+  target_compile_features(_base INTERFACE "-std=c++17")
 endif()
 
 add_executable(NESting-app WIN32 MACOSX_BUNDLE ${SRC_FILES})

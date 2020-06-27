@@ -24,16 +24,14 @@ public:
 	inline size_t len() const { return _len; }
   inline size_t bytelen() const { return _len * sizeof(T); }
   
-  template<typename Tk>
-  static slice<Tk> FromWDL(const WDL_TypedBuf<Tk>& buf)
+  static slice<T> FromWDL(const WDL_TypedBuf<T>& buf)
   {
-    return slice<Tk>(buf.Get(), buf.GetSize());
+    return slice<T>(buf.Get(), buf.GetSize());
   }
   
-  template<typename Tk>
-  static slice<Tk> FromBytes(const void* ptr, int length)
+  static slice<T> FromBytes(const void* ptr, int length)
   {
-    return slice<Tk>(ptr, length / sizeof(Tk));
+    return slice<T>(ptr, length / sizeof(T));
   }
 
 private:

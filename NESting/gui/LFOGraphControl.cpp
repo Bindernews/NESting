@@ -1,10 +1,11 @@
 
 #include "LFOGraphControl.h"
 #include "math_utils.h"
+#include "LoopPointControl.h"
 
 #define VERTICAL_MOUSE_PADDING (2.f)
 
-LFOGraphControl::LFOGraphControl(const IRECT& bounds, int maxSteps, float defaultValue, const char *label,
+LFOGraphControl::LFOGraphControl(const IRECT& bounds, int minBars, int maxBars, float defaultValue, const char *label,
 		const IVStyle& style)
 	: IControl(bounds), IVectorBase(style, false, false)
 {
@@ -12,18 +13,16 @@ LFOGraphControl::LFOGraphControl(const IRECT& bounds, int maxSteps, float defaul
 	mNumSteps = 1;
   mNumBars = 0;
 	mDefaultValue = defaultValue;
-	mValues.resize(maxSteps, defaultValue);
-  mLoopStart = 1.0f;
-  mLoopEnd = 1.0f;
+	mMinBars = minBars;
+	mValues.resize(maxBars, defaultValue);
   mDisplayFn = [](float value, WDL_String& msg) { msg.SetFormatted(20, "%.2f", value); };
-	
-	iStyle.barColor = COLOR_RED;
-	iStyle.padding = 8.f;
-	iStyle.labelWidth = 30.f;
-	iStyle.labelPadding = 6.f;
 
 	mStyle.labelText.mAlign = EAlign::Center;
 	mStyle.labelText.mVAlign = EVAlign::Top;
+
+	mLoopPointControl = nullptr;
+
+	SetNVals(3);
 }
 
 LFOGraphControl::~LFOGraphControl()
@@ -39,17 +38,21 @@ void LFOGraphControl::Draw(IGraphics& g)
 
 void LFOGraphControl::DrawWidget(IGraphics& g)
 {
+	// Update our cached value
+	mNumBars = GetNumBars();
+	int idxLoopStart = GetLoopStart();
+	int idxLoopEnd = GetLoopEnd();
+
 	// Now draw the bars
-  mBarBounds = mRECT.GetPadded(-iStyle.padding);
+  mBarBounds = mRECT.GetPadded(-iStyle.padding, -topPadding(), -iStyle.padding, -iStyle.padding);
   mBarBounds.B -= iStyle.padding;
 	DrawBars(g, mBarBounds);
 
-	// Finally draw the loop point indicator
-	IRECT loopBox = mBarBounds.SubRectHorizontal(mNumBars, mLoopStart);
-	loopBox.T = mRECT.T;
-	loopBox.B = mRECT.T - 1.f;
-	loopBox.R = mBarBounds.R;
-	g.FillRect(iStyle.barColor, loopBox);
+	// Draw loop lines
+	IRECT bLoopStart = mBarBounds.SubRectHorizontal(mNumBars, idxLoopStart);
+	IRECT bLoopEnd = mBarBounds.SubRectHorizontal(mNumBars, idxLoopEnd);
+	g.DrawVerticalLine(iStyle.barColor, bLoopStart.L, mBarBounds.B, mRECT.T);
+	g.DrawVerticalLine(iStyle.barColor, bLoopEnd.R, mBarBounds.B, mRECT.T);
 
   // Draw the value at the current mouse position
   if (mMouseIsOver) {
@@ -63,8 +66,26 @@ void LFOGraphControl::DrawWidget(IGraphics& g)
       g.DrawText(mStyle.labelText, mDisplayStr.Get(), place.MW(), place.B + 2.f);
     }
     // If the mouse is over us, we have to update every frame
-    SetDirty();
+    //SetDirty();
   }
+}
+
+void LFOGraphControl::OnAttached()
+{
+	// Once we're attached, create a sub-control and set parameters accordingly.
+	mLoopPointControl = new LoopPointControl(mRECT.GetFromTop(topPadding()), *this);
+	GetUI()->AttachControl(mLoopPointControl, -1, GetGroup());
+	for (int i = 0; i < NVals(); i++) {
+		mLoopPointControl->SetParamIdx(GetParamIdx(i), i);
+	}
+}
+
+void LFOGraphControl::SetParamIdx(int paramIdx, int valIdx)
+{
+	if (mLoopPointControl) {
+		mLoopPointControl->SetParamIdx(paramIdx, valIdx);
+	}
+	IControl::SetParamIdx(paramIdx, valIdx);
 }
 
 int LFOGraphControl::ProcessGraphClick(float x, float y, const IMouseMod& mod)
@@ -87,9 +108,17 @@ int LFOGraphControl::ProcessGraphClick(float x, float y, const IMouseMod& mod)
 	return -1;
 }
 
+int LFOGraphControl::GetBarForX(float x) const
+{
+	if (!mBarBounds.ContainsEdge(x, mBarBounds.T + 0.1)) {
+		return -1;
+	}
+	return int(lerp(0.f, float(mNumBars), unlerp(mBarBounds.L, mBarBounds.R, x)));
+}
+
 void LFOGraphControl::DrawBars(IGraphics& g, const IRECT& bounds)
 {
-	if (mNumSteps == 0) {
+	if (mNumSteps == 0 || mNumBars == 0) {
 		return;
 	}
 	IRECT box0 = bounds.SubRectHorizontal(mNumBars, 0);
@@ -160,9 +189,16 @@ void LFOGraphControl::OnMouseDown(float x, float y, const IMouseMod& mod)
 	ProcessGraphClick(x, y, mod);
 }
 
+void LFOGraphControl::OnMouseOver(float x, float y, const IMouseMod& mod)
+{
+	IControl::OnMouseOver(x, y, mod);
+	ProcessGraphClick(x, y, mod);
+	SetDirty(false);
+}
+
 void LFOGraphControl::OnMouseDblClick(float x, float y, const IMouseMod& mod)
 {
-    float nvalue;
+  float nvalue;
 	int barIndex = GetValueAt(x, y, nvalue);
 	if (barIndex != -1) {
 		SetBarValue(barIndex, mDefaultValue, true);
@@ -175,20 +211,37 @@ void LFOGraphControl::SetNumSteps(int steps)
     SetDirty(false);
 }
 
-void LFOGraphControl::SetNumBars(int steps)
-{
-	if (steps < 1 || steps > mValues.size()) { return; }
-	if (mNumBars == steps) { return; }
-	mNumBars = steps;
-	SetDirty(false);
-}
-
 bn::slice<float> LFOGraphControl::GetBarValues() const
 {
 	return bn::slice(mValues.data(), mValues.size());
 }
 
+float LFOGraphControl::topPadding() const
+{
+	return iStyle.loopSpace + 2.0f;
+}
+
 void LFOGraphControl::SetDisplayFn(DisplayMessageCallback cb)
 {
     mDisplayFn = cb;
+}
+
+int LFOGraphControl::GetNumBars() const
+{
+	return int(lerp(double(mMinBars), double(mValues.size()), GetValue(0)));
+}
+
+int LFOGraphControl::GetLoopStart() const
+{
+	return int(lerp(0.0, double(mValues.size() - 1), GetValue(1)));
+}
+
+int LFOGraphControl::GetLoopEnd() const
+{
+	return int(lerp(0.0, double(mValues.size() - 1), GetValue(2)));
+}
+
+double LFOGraphControl::NormLoopPoint(double v) const
+{
+	return unlerp(0.0, double(mValues.size() - 1), v);
 }

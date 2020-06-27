@@ -22,26 +22,9 @@ void NESting::OnParamChangeUI(int paramIdx, const EParamSource source)
   // This can get called even when the UI isn't being displayed.
   if (!GetUI()) { return; }
 
-  // Update UI when a steps or loop point knob changes.
-  auto updateGraphAndKnobs = [&](int ctrlTag, int baseParam) {
-    auto ui = GetUI();
-    auto graph = ui->GetControlWithTag(ctrlTag)->As<LFOGraphControl>();
-    // Make sure nothing has gone horribly wrong.
-    assert(graph != nullptr);
-    int numSteps = GetParam(baseParam + 0)->Int();
-    double loopPoint = GetParam(baseParam + 1)->Value();
-
-    graph->SetNumBars(numSteps);
-    graph->SetLoopStart(calcLoopPoint(loopPoint, numSteps));
-    graph->SetDirty(false);
-    // Set the loop point knob as dirty when we change the step knob.
-    ui->GetControlWithTag(ctrlTag + 2)->SetDirty(false);
-    // The other two params don't matter. They only influence the DSP.
-  };
-
   // Update UI when the time or tempo sync params change.
   auto updateTempoSync = [&](int ctrlTag, int baseParam) {
-    // bool tSync = GetParam(baseParam + 3)->Bool();
+    // bool tSync = GetParam(baseParam + 4)->Bool();
     // TODO set stepped
     GetUI()->GetControlWithTag(ctrlTag + 3)->SetDirty(false);
   };
@@ -51,40 +34,29 @@ void NESting::OnParamChangeUI(int paramIdx, const EParamSource source)
   case iParamUseAutomationGraphs:
     UpdateUISize();
     break;
-
-  case iParamVolumeSteps:
-  case iParamVolumeLoopPoint:
-    updateGraphAndKnobs(kCtrlVolumeGraph, iParamVolumeSteps);
-    break;
   case iParamVolumeTime:
   case iParamVolumeTempoSync:
     updateTempoSync(kCtrlVolumeGraph, iParamVolumeSteps);
-    break;
-  case iParamDutySteps:
-  case iParamDutyLoopPoint:
-    updateGraphAndKnobs(kCtrlDutyGraph, iParamDutySteps);
     break;
   case iParamDutyTime:
   case iParamDutyTempoSync:
     updateTempoSync(kCtrlDutyGraph, iParamDutySteps);
     break;
-  case iParamPitchSteps:
-  case iParamPitchLoopPoint:
-    updateGraphAndKnobs(kCtrlPitchGraph, iParamPitchSteps);
-    break;
   case iParamPitchTime:
   case iParamPitchTempoSync:
     updateTempoSync(kCtrlPitchGraph, iParamPitchSteps);
-    break;
-  case iParamFineSteps:
-  case iParamFineLoopPoint:
-    updateGraphAndKnobs(kCtrlFineGraph, iParamFineSteps);
     break;
   case iParamFineTime:
   case iParamFineTempoSync:
     updateTempoSync(kCtrlFineGraph, iParamFineSteps);
     break;
   }
+}
+
+void NESting::OnRestoreState()
+{
+  Plugin::OnRestoreState();
+  updateGraphUI();
 }
 
 void NESting::buildUI(IGraphics* ui)
@@ -120,9 +92,11 @@ void NESting::buildUI(IGraphics* ui)
     // paramIds: { idSteps, idLoop, idTime, idTimeSync }
     auto buildGraphPanel = [this, ui, style](const IRECT& b, IColor color, float defaultValue, int ctrlTag, int paramId,
           int nSteps, DisplayMessageCallback cb) {
-      auto graph = new LFOGraphControl(b.GetFromTop(80), MAX_LFO_GRAPH_STEPS, defaultValue, "", style);
+      auto graph = new LFOGraphControl(b.GetFromTop(80), MIN_LFO_GRAPH_STEPS, MAX_LFO_GRAPH_STEPS, defaultValue, "", style);
       graph->iStyle.barColor = color;
-      graph->SetNumBars(8);
+      graph->SetParamIdx(paramId + 0, 0);
+      graph->SetParamIdx(paramId + 1, 1);
+      graph->SetParamIdx(paramId + 2, 2);
       graph->SetNumSteps(nSteps);
       graph->SetActionFunction([&, ctrlTag](IControl* control) {
         auto barValues = control->As<LFOGraphControl>()->GetBarValues();
@@ -133,9 +107,8 @@ void NESting::buildUI(IGraphics* ui)
 
       IRECT knobArea = b.GetAltered(0., 90., 0., 0.).GetFromTop(60.);
       ui->AttachControl(new IVKnobControl(knobArea.GetGridCell(0, 1, 4), paramId + 0, "Steps", style), ctrlTag + 1, GRAPHS_GROUP);
-      ui->AttachControl(new IVKnobControl(knobArea.GetGridCell(1, 1, 4), paramId + 1, "Loop Point", style), ctrlTag + 2, GRAPHS_GROUP);
-      ui->AttachControl(new IVKnobControl(knobArea.GetGridCell(2, 1, 4), paramId + 2, "Time", style), ctrlTag + 3, GRAPHS_GROUP);
-      ui->AttachControl(new IVToggleControl(knobArea.GetGridCell(3, 1, 4), paramId + 3, "Tempo Sync", style), ctrlTag + 4, GRAPHS_GROUP);
+      ui->AttachControl(new IVKnobControl(knobArea.GetGridCell(1, 1, 4), paramId + 3, "Time", style), ctrlTag + 3, GRAPHS_GROUP);
+      ui->AttachControl(new IVToggleControl(knobArea.GetGridCell(2, 1, 4), paramId + 4, "Tempo Sync", style), ctrlTag + 4, GRAPHS_GROUP);
     };
 
     const float GRAPH_PAD = -10.f;
@@ -170,10 +143,10 @@ void NESting::buildUI(IGraphics* ui)
     IRECT b_3 = bGraph.GetGridCell(2, 2, 2).GetPadded(GRAPH_PAD);
     addLabel(b_3, "Pitch");
     auto display_3 = [](float value, WDL_String& msg) {
-      msg.SetFormatted(20, "%d", int(Lerp(-12.f, 12.f, value)));
+      msg.SetFormatted(20, "%d", int(Lerp(PITCH_LOW, PITCH_HIGH, value)));
     };
     buildGraphPanel(b_3, COLOR_BLUE, DEFAULT_ENV_PITCH, kCtrlPitchGraph, iParamPitchSteps,
-                    25, display_3);
+                    24, display_3);
 
     // Fine pitch
     IRECT b_4 = bGraph.GetGridCell(3, 2, 2).GetPadded(GRAPH_PAD);
@@ -182,7 +155,7 @@ void NESting::buildUI(IGraphics* ui)
       msg.SetFormatted(20, "%1.2f", Lerp(-1.f, 1.f, value));
     };
     buildGraphPanel(b_4, COLOR_GREEN, DEFAULT_ENV_FINE_PITCH, kCtrlFineGraph, iParamFineSteps,
-                    13, display_4);
+                    12, display_4);
   }
 
   // Build the generic envelopes
@@ -196,21 +169,7 @@ void NESting::buildUI(IGraphics* ui)
   ui->AttachControl(new IVKnobControl(bEnvels.SubRectHorizontal(4, 3), iParamFineEnvelope),
     kCtrlFineGraph + 5, ENVELOPES_GROUP);
 
-  // Update the graph bars with values from the DSP
-  // TODO this will fail if the EDITOR and DSP aren't defined together.
-  auto setControlValues = [&](IControl* control, const LFOGraph& src) {
-    auto graph = control->As<LFOGraphControl>();
-    auto sValues = src.GetValues();
-    for (int i = 0; i < sValues.len(); i++) {
-      graph->SetBarValue(i, sValues[i], false);
-    }
-  };
-
-  auto voice = dynamic_cast<NESVoice*>(mSynth.GetVoice(0));
-  setControlValues(ui->GetControlWithTag(kCtrlVolumeGraph), voice->mGainGraph);
-  setControlValues(ui->GetControlWithTag(kCtrlDutyGraph), voice->mDutyGraph);
-  setControlValues(ui->GetControlWithTag(kCtrlPitchGraph), voice->mPitchGraph);
-  setControlValues(ui->GetControlWithTag(kCtrlFineGraph), voice->mFinePitchGraph);
+  updateGraphUI();
 
 #ifdef APP_API
   IRECT keyboardBounds = b.GetFromBottom(KEYBOARD_HEIGHT);
@@ -265,6 +224,28 @@ float NESting::getDesiredHeight()
   h += KEYBOARD_PANEL_HEIGHT;
 #endif
   return h;
+}
+
+void NESting::updateGraphUI()
+{ 
+  auto ui = GetUI();
+  if (!ui) { return; }
+
+  // Update the graph bars with values from the DSP
+  // TODO this will fail if the EDITOR and DSP aren't defined together.
+  auto setControlValues = [&](IControl* control, const LFOGraph& src) {
+    auto graph = control->As<LFOGraphControl>();
+    auto sValues = src.GetValues();
+    for (int i = 0; i < sValues.len(); i++) {
+      graph->SetBarValue(i, sValues[i], false);
+    }
+  };
+
+  auto voice = dynamic_cast<NESVoice*>(mSynth.GetVoice(0));
+  setControlValues(ui->GetControlWithTag(kCtrlVolumeGraph), voice->mGainGraph);
+  setControlValues(ui->GetControlWithTag(kCtrlDutyGraph), voice->mDutyGraph);
+  setControlValues(ui->GetControlWithTag(kCtrlPitchGraph), voice->mPitchGraph);
+  setControlValues(ui->GetControlWithTag(kCtrlFineGraph), voice->mFinePitchGraph);
 }
 
 #endif

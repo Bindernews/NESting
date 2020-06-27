@@ -6,8 +6,12 @@
 #define DEFAULT_ENV_DUTY (1.0f)
 #define DEFAULT_ENV_PITCH (0.5f)
 #define DEFAULT_ENV_FINE_PITCH (0.5f)
+#define MIN_LFO_GRAPH_STEPS (4)
 #define MAX_LFO_GRAPH_STEPS (64)
 #define ADSR_MAX_TIME 1000
+
+#define PITCH_LOW (-12.0f)
+#define PITCH_HIGH (12.0f)
 
 #define NOISE_MODE_LIST "32767 Steps", "93 Steps"
 #define WAVE_SHAPE_LIST "Square", "Triangle", "Noise", "DPCM"

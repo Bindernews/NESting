@@ -26,6 +26,8 @@ NESVoice::NESVoice(NESting& owner)
   mFaustSquare.Init();
 
   mNoise.Reset();
+
+  mPitchGraph.SetRange(PITCH_LOW, PITCH_HIGH);
 }
 
 NESVoice::~NESVoice()
@@ -36,7 +38,8 @@ NESVoice::~NESVoice()
 
 bool NESVoice::GetBusy() const
 {
-    return mADSR.GetBusy();
+    return mADSR.GetBusy() || mGainGraph.GetBusy() || mDutyGraph.GetBusy() 
+      || mPitchGraph.GetBusy() || mFinePitchGraph.GetBusy();
 }
 
 void NESVoice::Trigger(double level, bool isRetrigger)
@@ -51,6 +54,7 @@ void NESVoice::Trigger(double level, bool isRetrigger)
     mGainGraph.Trigger(level, isRetrigger);
     mPitchGraph.Trigger(level, isRetrigger);
     mDutyGraph.Trigger(level, isRetrigger);
+    mFinePitchGraph.Trigger(level, isRetrigger);
 }
 
 void NESVoice::Release()
@@ -60,6 +64,7 @@ void NESVoice::Release()
     mGainGraph.Release();
     mPitchGraph.Release();
     mDutyGraph.Release();
+    mFinePitchGraph.Release();
 }
 
 void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int nInputs, int nOutputs, int startIdx, int nFrames)
@@ -87,7 +92,7 @@ void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int
     sample* gainBuf = mGainBuf.Get();
     double pitchOffset = pitch + pitchBend;
     sample* pitchBuf = mPitchBuf.Get();
-    PARALLEL_FOR_LOOP
+
     for (int i = 0; i < nFrames; i++) {
         gainBuf[i] = gainBuf[i] * gain;
         pitchBuf[i] = sample(PitchToHz(pitchBuf[i] + pitchOffset));

@@ -68,6 +68,8 @@ set(SRC_FILES
     gui/IVDropdownMenuControl.cpp
     gui/LFOGraphControl.h
     gui/LFOGraphControl.cpp
+    gui/LoopPointControl.h
+    gui/LoopPointControl.cpp
     presets/presets.h
     presets/presets.cpp
     ${RES_FILES}

@@ -47,25 +47,29 @@ enum EParam
   iParamUseAutomationGraphs,
 
   iParamVolumeSteps,
-  iParamVolumeLoopPoint,
+  iParamVolumeLoopStart,
+  iParamVolumeLoopEnd,
   iParamVolumeTime,
   iParamVolumeTempoSync,
   iParamVolumeEnvelope,
 
   iParamDutySteps,
-  iParamDutyLoopPoint,
+  iParamDutyLoopStart,
+  iParamDutyLoopEnd,
   iParamDutyTime,
   iParamDutyTempoSync,
   iParamDutyEnvelope,
 
   iParamPitchSteps,
-  iParamPitchLoopPoint,
+  iParamPitchLoopStart,
+  iParamPitchLoopEnd,
   iParamPitchTime,
   iParamPitchTempoSync,
   iParamPitchEnvelope,
 
   iParamFineSteps,
-  iParamFineLoopPoint,
+  iParamFineLoopStart,
+  iParamFineLoopEnd,
   iParamFineTime,
   iParamFineTempoSync,
   iParamFineEnvelope,
@@ -133,6 +137,7 @@ private:
 public:
   void UpdateUISize();
   void OnParamChangeUI(int paramIdx, const EParamSource source) override;
+  void OnRestoreState() override;
 
 private:
   /// Construct the UI elements with their correct, default positions.
@@ -141,6 +146,8 @@ private:
   void layoutUI(IGraphics* ui);
   /// Returns the desired height of the GUI. This changes based on some parameters.
   float getDesiredHeight();
+  /// Update the graph UI from the DSP data
+  void updateGraphUI();
 #endif
 
 #if IPLUG_DSP

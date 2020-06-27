@@ -66,21 +66,19 @@ void NESting::initParams()
     auto initGraphParams = [&](const char* prefix, int firstIdx) {
         WDL_String name;
         name.SetFormatted(50, "%s - Steps", prefix);
-        GetParam(firstIdx + 0)->InitDouble(name.Get(), 8, 4, 64, 4, "", IParam::kFlagStepped);
+        GetParam(firstIdx + 0)->InitDouble(name.Get(), 8, MIN_LFO_GRAPH_STEPS, MAX_LFO_GRAPH_STEPS, 4, "", IParam::kFlagStepped);
 
-        name.SetFormatted(50, "%s - Loop Point", prefix);
-        GetParam(firstIdx + 1)->InitDouble(name.Get(), 1, 0, 1, 0.1);
-        // For the loop point, we display the loop number relative to the current number of steps
-        GetParam(firstIdx + 1)->SetDisplayFunc([&, firstIdx](double value, WDL_String& disp) {
-            int numSteps = GetParam(firstIdx + 0)->Int();
-            disp.SetFormatted(10, "%d", calcLoopPoint(value, numSteps));
-            });
+        name.SetFormatted(50, "%s - Loop Start", prefix);
+        GetParam(firstIdx + 1)->InitDouble(name.Get(), 7, 0, MAX_LFO_GRAPH_STEPS - 1, 1, "", IParam::kFlagStepped);
+
+        name.SetFormatted(50, "%s - Loop End", prefix);
+        GetParam(firstIdx + 2)->InitDouble(name.Get(), 7, 0, MAX_LFO_GRAPH_STEPS - 1, 1, "", IParam::kFlagStepped);
 
         name.SetFormatted(50, "%s - Time", prefix);
-        GetParam(firstIdx + 2)->InitDouble(name.Get(), 0.5, 0, 1, 0.1);
+        GetParam(firstIdx + 3)->InitDouble(name.Get(), 0.5, 0, 1, 0.1);
         // Display either the value in milliseconds, or the tempo sync value when synchronizing with the tempo 
-        GetParam(firstIdx + 2)->SetDisplayFunc([&, firstIdx](double value, WDL_String& disp) {
-            bool tSync = GetParam(firstIdx + 3)->Bool();
+        GetParam(firstIdx + 3)->SetDisplayFunc([&, firstIdx](double value, WDL_String& disp) {
+            bool tSync = GetParam(firstIdx + 4)->Bool();
             if (tSync) {
                 int tempoIndex = NormToInt(0, TEMPO_LIST_SIZE, value);
                 disp.SetFormatted(20, "%s", TEMPO_DIVISION_NAMES[tempoIndex]);
@@ -92,11 +90,11 @@ void NESting::initParams()
             });
 
         name.SetFormatted(50, "%s - Tempo Sync", prefix);
-        GetParam(firstIdx + 3)->InitBool(name.Get(), true);
+        GetParam(firstIdx + 4)->InitBool(name.Get(), true);
 
 
         name.SetFormatted(50, "%s Envelope", prefix);
-        GetParam(firstIdx + 4)->InitDouble(name.Get(), 0.5, 0., 1., 0.01);
+        GetParam(firstIdx + 5)->InitDouble(name.Get(), 0.5, 0., 1., 0.01);
     };
 
     initGraphParams("Volume", iParamVolumeSteps);
@@ -158,81 +156,86 @@ void NESting::ProcessMidiMsg(const IMidiMsg& msg)
 
 void NESting::OnReset()
 {
-    mSynth.Reset();
-    mSynth.SetSampleRateAndBlockSize(GetSampleRate(), GetBlockSize());
+  mSynth.Reset();
+  mSynth.SetSampleRateAndBlockSize(GetSampleRate(), GetBlockSize());
 
-    mInputBuffer.Resize(int(GetSampleRate()), true);
-    for (int i = 0; i < mInputBuffer.GetSize(); i += 1) {
-        mInputBuffer.Get()[i] = 0.f;
-    }
+  mInputBuffer.Resize(int(GetSampleRate()), true);
+  for (int i = 0; i < mInputBuffer.GetSize(); i += 1) {
+     mInputBuffer.Get()[i] = 0.f;
+  }
 }
 
 void NESting::OnParamChange(int paramIdx)
 {
-    // Helper function that updates the fields of an LFOGraph based on the relevant parameters.
-    auto updateLFOGraph = [&, paramIdx](LFOGraph& graph, int baseParam) {
-        switch (paramIdx - baseParam)
-        {
-        case 0: // Steps
-            graph.mNumSteps = GetParam(paramIdx)->Int();
-            break;
-        case 1: // Loop point
-            graph.mLoopPoint = calcLoopPoint(GetParam(paramIdx)->Value(), graph.mNumSteps);
-            break;
-        case 2: // Time and Tempo Sync
-        case 3:
-            double timeNorm = GetParam(baseParam + 2)->Value();
-            bool tSync = GetParam(baseParam + 3)->Bool();  // are we doing temo-sync or milliseconds
-            if (tSync) {
-                double tempoDiv = TEMPO_DIVISION_VALUES[NormToInt(0, TEMPO_LIST_SIZE, timeNorm)];
-                graph.SetStepSamples(int(tempoDiv * GetSamplesPerBeat()));
-            }
-            else {
-                // Convert timeNorm to time in milliseconds, then time in seconds.
-                double timeSec = double(NormToInt(0, MAX_LFO_STEP_TIME_MS, timeNorm)) / 1000.;
-                graph.SetStepSamples(int(TimeToSamples(timeSec, GetSampleRate())));
-            }
-        }
-    };
-
-    double vReal = GetParam(paramIdx)->Value();
-
-#define LFO_PARAM_CASES(name) case iParam##name##Steps: case iParam##name##LoopPoint: \
-    case iParam##name##Time: case iParam##name##TempoSync
-
-    // Update the parameter state for our voices as well.
-    for (size_t i = 0; i < mSynth.NVoices(); i++) {
-      auto voice = dynamic_cast<NESVoice*>(mSynth.GetVoice(i));
-        
-      switch (paramIdx) {
-      case iParamAttack:
-        voice->mADSR.SetStageTime(0, sample(vReal));
-        break;
-      case iParamDecay:
-        voice->mADSR.SetStageTime(1, sample(vReal));
-      case iParamSustain:
-        voice->mSustain = float(vReal);
-      case iParamRelease:
-        voice->mADSR.SetStageTime(3, sample(vReal));
-        break;
-      
-      LFO_PARAM_CASES(Volume):
-        updateLFOGraph(voice->mGainGraph, iParamVolumeSteps);
-        break;
-      LFO_PARAM_CASES(Duty):
-        updateLFOGraph(voice->mDutyGraph, iParamDutySteps);
-        break;
-      LFO_PARAM_CASES(Pitch):
-        updateLFOGraph(voice->mPitchGraph, iParamPitchSteps);
-        break;
-      LFO_PARAM_CASES(Fine) :
-        //updateLFOGraph(voice->m)
-        break;
-      case iParamShape:
-        voice->mShape = GetParam(paramIdx)->Int();
-        break;
+  // Helper function that updates the fields of an LFOGraph based on the relevant parameters.
+  auto updateLFOGraph = [&, paramIdx](LFOGraph& graph, int baseParam) {
+    switch (paramIdx - baseParam)
+    {
+    case 0: // Steps
+      graph.mNumSteps = GetParam(paramIdx)->Int();
+      break;
+    case 1: // Loop start
+      graph.mLoopStart = int(GetParam(paramIdx)->Value());
+      break;
+    case 2: // Loop end
+      graph.mLoopEnd = int(GetParam(paramIdx)->Value());
+      break;
+    case 3: // Time and Tempo Sync
+    case 4:
+      double timeNorm = GetParam(baseParam + 3)->Value();
+      bool tSync = GetParam(baseParam + 4)->Bool();  // are we doing temo-sync or milliseconds
+      if (tSync) {
+        double tempoDiv = TEMPO_DIVISION_VALUES[NormToInt(0, TEMPO_LIST_SIZE, timeNorm)];
+        graph.SetStepSamples(int(tempoDiv * GetSamplesPerBeat()));
       }
-    };
+      else {
+        // Convert timeNorm to time in milliseconds, then time in seconds.
+        double timeSec = double(NormToInt(0, MAX_LFO_STEP_TIME_MS, timeNorm)) / 1000.;
+        graph.SetStepSamples(int(TimeToSamples(timeSec, GetSampleRate())));
+      }
+    }
+  };
+
+  double vReal = GetParam(paramIdx)->Value();
+
+#define LFO_PARAM_CASES(name) case iParam##name##Steps: case iParam##name##LoopStart: \
+    case iParam##name##LoopEnd: case iParam##name##Time: case iParam##name##TempoSync
+
+  // Update the parameter state for our voices as well.
+  for (size_t i = 0; i < mSynth.NVoices(); i++) {
+    auto voice = dynamic_cast<NESVoice*>(mSynth.GetVoice(i));
+
+    switch (paramIdx) {
+    case iParamAttack:
+      voice->mADSR.SetStageTime(0, sample(vReal));
+      break;
+    case iParamDecay:
+      voice->mADSR.SetStageTime(1, sample(vReal));
+      break;
+    case iParamSustain:
+      voice->mSustain = float(vReal);
+      break;
+    case iParamRelease:
+      voice->mADSR.SetStageTime(3, sample(vReal));
+      break;
+      
+    LFO_PARAM_CASES(Volume):
+      updateLFOGraph(voice->mGainGraph, iParamVolumeSteps);
+      break;
+    LFO_PARAM_CASES(Duty):
+      updateLFOGraph(voice->mDutyGraph, iParamDutySteps);
+      break;
+    LFO_PARAM_CASES(Pitch):
+      updateLFOGraph(voice->mPitchGraph, iParamPitchSteps);
+      break;
+    LFO_PARAM_CASES(Fine) :
+      updateLFOGraph(voice->mFinePitchGraph, iParamFineSteps);
+      break;
+    case iParamShape:
+      voice->mShape = GetParam(paramIdx)->Int();
+      break;
+    }
+  };
 }
 
 bool NESting::OnMessage(int msgTag, int ctrlTag, int dataSize, const void* pData)

@@ -5,20 +5,12 @@
 #include "ColorSpec.h"
 #include <slice.hpp>
 #include <vector>
+#include <functional>
 
 using namespace iplug;
 using namespace iplug::igraphics;
 
-struct LabelPoint
-{
-	LabelPoint() : value(0.f), label(nullptr) {}
-	LabelPoint(float value, const char* label = nullptr) : value(value), label(label) {}
-
-	/// A label for the point value (optional)
-	const char* label;
-	/// The value of the point (range 0.0 - 1.0) (required)
-	float value;
-};
+using DisplayMessageCallback = std::function<void(float,WDL_String&)>;
 
 class LFOGraphControl : public IVectorBase, public IControl
 {
@@ -43,23 +35,34 @@ public:
 
 	int ProcessGraphClick(float x, float y, const IMouseMod& mod);
 	void DrawBars(IGraphics& g, const IRECT& bounds);
-
-	/// Set the stop points.
-	///
-	/// The point values must be sorted lowest to highest.
-	/// 
-	/// @param l initializer list of points
-	void SetStops(const bn::slice<LabelPoint> stops);
+    
+    
+    /// Determine the value of the graph at the given mouse location.
+    /// @param x Mouse-X
+    /// @param y Mouse-Y
+    /// @param out_value value of the mouse at that location
+    /// @return The bar index or -1 if the mouse isn't over any bar
+    int GetValueAt(float x, float y, float &out_value) const;
+    
+    void SetDisplayFn(DisplayMessageCallback cb);
+    
+    /// Set the number of unique values for each bar of the graph.
+    /// The step size will be 1/steps.
+    void SetNumSteps(int steps);
+    
+    int GetNumSteps() const;
 
 	/// Set the number of steps displayed in the LFO Graph.
 	/// This must be at least one, and at most `maxValues` as specified in the constructor.
-	void SetSteps(int steps);
+	void SetNumBars(int steps);
 	
 	/// Returns the number of currently displayed steps.
-	inline int GetSteps() const { return mNumSteps; }
+	inline int GetNumBars() const { return mNumSteps; }
 
-	inline void SetLoopPoint(int value) { mLoopPoint = value; }
-	inline int GetLoopPoint() const { return mLoopPoint; }
+  inline void SetLoopStart(int value) { mLoopStart = value; }
+  inline int GetLoopStart() const { return mLoopStart; }
+	inline void SetLoopEnd(int value) { mLoopEnd = value; }
+	inline int GetLoopEnd() const { return mLoopEnd; }
 
 	void SetBarValue(int index, float value, bool updateDSP=true);
 	bn::slice<float> GetBarValues() const;
@@ -67,22 +70,20 @@ public:
 	Style iStyle;
 
 protected:
+  int mNumBars;
 	int mNumSteps;
-	int mLoopPoint;
-	/// Are the values continuous, or are they in descrete steps?
-	bool mIsContinuous;
-	/// The different step values available in this bar graph.
-	/// Note that these MUST be normalized to the range [0, 1].
-	/// Denormalize them when using them.
-	std::vector<LabelPoint> mStops;
+	int mLoopStart;
+  int mLoopEnd;
 	/// The stored values for the bar graph.
 	std::vector<float> mValues;
 	/// Default value for new steps
 	float mDefaultValue;
+    /// Callback function used to display values.
+    DisplayMessageCallback mDisplayFn;
 
 private:
-	/// Maximum width of the labels. If this is -1, it must be re-calculated.
-	float mLabelWidth;
+	/// Buffer for mDisplayFn
+    WDL_String mDisplayStr;
 	/// Current bounds of the actual bar graph
 	IRECT mBarBounds;
 };

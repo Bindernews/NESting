@@ -9,6 +9,8 @@
 #define MIN_LFO_GRAPH_STEPS (4)
 #define MAX_LFO_GRAPH_STEPS (64)
 #define ADSR_MAX_TIME 1000
+// Writing pure square waves is VERY loud, so we don't let it get above a certain gain by default.
+#define MAX_GAIN (0.7f)
 
 #define PITCH_LOW (-12.0f)
 #define PITCH_HIGH (12.0f)

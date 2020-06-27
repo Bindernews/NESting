@@ -7,15 +7,16 @@ LFOGraph::LFOGraph(int maxSteps, float defaultValue)
 {
 	mValues.Resize(maxSteps);
 	mDefaultValue = defaultValue;
+	mZeroValue = defaultValue;
 	set_buffer<float>(mValues.Get(), maxSteps, defaultValue);
+	mLow = 0.0f;
+	mHigh = 1.0f;
 }
 
 void LFOGraph::Trigger(double level, bool isRetrigger)
 {
 	mSampleIdx = 0;
 	mState = kSAttack;
-	mLow = 0.0f;
-	mHigh = 1.0f;
 }
 
 void LFOGraph::Release()
@@ -81,7 +82,7 @@ void LFOGraph::ProcessBlock(sample* output, int nFrames)
 	}
 	else {
 		// Default, set value to default
-		set_buffer(output, nFrames, mDefaultValue);
+		set_buffer(output, nFrames, mZeroValue);
 	}
 
 	// Denormalize our values

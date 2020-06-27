@@ -163,9 +163,11 @@ public:
   int UnserializeState(const IByteChunk& chunk, int startPos) override;
 
 private:
+  /** Call a function on each voice in our synth. */
+  void forEachVoice(std::function<void(NESVoice*)> cb);
   /** Initalize the presets */
   void initPresets();
-  /** Helper function that returns our only NESVoice object. */
+  /** Helper function that returns our first NESVoice object. Useful for saving state. */
   NESVoice* GetVoice() const;
 
   MidiSynth mSynth{ VoiceAllocator::kPolyModePoly, MidiSynth::kDefaultBlockSize };

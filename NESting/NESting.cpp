@@ -39,7 +39,9 @@ NESting::NESting(const InstanceInfo& info)
     initParams();
 
 #if IPLUG_DSP
-    mSynth.AddVoice(new NESVoice(*this), 0);
+    for (int i = 0; i < 1; i++) {
+      mSynth.AddVoice(new NESVoice(*this), 0);
+    }
 #endif
   
 #if IPLUG_EDITOR
@@ -296,6 +298,13 @@ void NESting::OnIdle()
       }
       msg.done();
     }
+  }
+}
+
+void NESting::forEachVoice(std::function<void(NESVoice*)> cb)
+{
+  for (int i = 0; i < mSynth.NVoices(); i++) {
+    cb(dynamic_cast<NESVoice*>(mSynth.GetVoice(i)));
   }
 }
 

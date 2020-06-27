@@ -33,7 +33,10 @@ public:
 
 	inline void SetRange(float low, float high) { mLow = low; mHigh = high; }
 
+	/// The default value for mValues
 	float mDefaultValue;
+	/// A value that won't change the output signal. Used for processing when in kSDone state.
+	float mZeroValue;
 	float mLow;
 	float mHigh;
 	int mSampleIdx;

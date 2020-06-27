@@ -27,7 +27,9 @@ NESVoice::NESVoice(NESting& owner)
 
   mNoise.Reset();
 
+  // Set graph-specifc variables.
   mPitchGraph.SetRange(PITCH_LOW, PITCH_HIGH);
+  mGainGraph.mZeroValue = 0.0f;
 }
 
 NESVoice::~NESVoice()
@@ -88,7 +90,7 @@ void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int
     }
 
     // Now update our buffers with values from the ADSR envelope and MIDI data
-    sample gain = sample(mADSR.Process(mSustain) * mGain);
+    sample gain = sample(mADSR.Process(mSustain) * mGain * 0.5f);
     sample* gainBuf = mGainBuf.Get();
     double pitchOffset = pitch + pitchBend;
     sample* pitchBuf = mPitchBuf.Get();
@@ -99,7 +101,7 @@ void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int
     }
 
     sample* inputs2[] = { gainBuf, pitchBuf, mDutyBuf.Get() };
-    sample* outputs2[] = { outputs[0] + startIdx, outputs[1] + startIdx };
+    sample* outputs2[] = { mOutBuf.Get() };
 
     switch (mShape) {
     case 0:
@@ -111,6 +113,12 @@ void NESVoice::ProcessSamplesAccumulating(sample** inputs, sample** outputs, int
     case 2:
         mNoise.ProcessBlock(inputs2, outputs2, nFrames);
         break;
+    }
+
+    // This is process samples accumulating, so we accumulate the actual output
+    for (int i = 0; i < nFrames; i++) {
+      outputs[0][startIdx + i] += outputs2[0][i];
+      outputs[1][startIdx + i] += outputs2[0][i];
     }
 }
 
@@ -127,6 +135,7 @@ void NESVoice::SetSampleRateAndBlockSize(double sampleRate, int blockSize)
     mGainBuf.Resize((int)blockSize);
     mPitchBuf.Resize((int)blockSize);
     mDutyBuf.Resize(int(blockSize));
+    mOutBuf.Resize(int(blockSize));
 }
 
 #endif

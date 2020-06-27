@@ -74,12 +74,6 @@ int NESting::UnserializeState(const IByteChunk& chunk, int startPos)
     return pos;
   }
 
-  auto voice = GetVoice();
-
-  auto graphSet = [&](const bsonelement& elem, LFOGraph& graph) {
-    graph.SetValues(bsonSlice<float>(elem));
-  };
-
   uint32_t bsonSize;
   pos = chunk.Get(&bsonSize, pos);
   const char* bsonStart = reinterpret_cast<const char*>(chunk.GetData() + pos);
@@ -95,16 +89,20 @@ int NESting::UnserializeState(const IByteChunk& chunk, int startPos)
       }
     }
     if (fieldNameEq(elem, "gainGraph")) {
-      graphSet(elem, voice->mGainGraph);
+      auto sli = bsonSlice<float>(elem);
+      forEachVoice([&, sli](NESVoice* v) { v->mGainGraph.SetValues(sli); });
     }
     else if (fieldNameEq(elem, "dutyGraph")) {
-      graphSet(elem, voice->mDutyGraph);
+      auto sli = bsonSlice<float>(elem);
+      forEachVoice([sli](NESVoice* v) { v->mDutyGraph.SetValues(sli); });
     }
     else if (fieldNameEq(elem, "pitchGraph")) {
-      graphSet(elem, voice->mPitchGraph);
+      auto sli = bsonSlice<float>(elem);
+      forEachVoice([sli](NESVoice* v) { v->mPitchGraph.SetValues(sli); });
     }
     else if (fieldNameEq(elem, "fineGraph")) {
-      graphSet(elem, voice->mFinePitchGraph);
+      auto sli = bsonSlice<float>(elem);
+      forEachVoice([sli](NESVoice* v) { v->mFinePitchGraph.SetValues(sli); });
     }
   }
 

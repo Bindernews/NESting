@@ -27,6 +27,11 @@ public:
     void ProcessSamplesAccumulating(sample** inputs, sample** outputs, int nInputs, int nOutputs, int startIdx, int nFrames) override;
     void SetSampleRateAndBlockSize(double sampleRate, int blockSize) override;
 
+    LFOGraph mGainGraph;
+    LFOGraph mPitchGraph;
+    LFOGraph mFinePitchGraph;
+    LFOGraph mDutyGraph;
+
 private:
     int mShape = 0;
     NESting& mOwner;
@@ -36,15 +41,11 @@ private:
     ADSREnvelope<sample> mADSR;
     float mSustain;
 
-    LFOGraph mGainGraph;
-    LFOGraph mPitchGraph;
-    LFOGraph mFinePitchGraph;
-    LFOGraph mDutyGraph;
-
     WDL_TypedBuf<sample> mGainBuf;
     WDL_TypedBuf<sample> mPitchBuf;
     WDL_TypedBuf<sample> mFinePitchBuf;
     WDL_TypedBuf<sample> mDutyBuf;
+    WDL_TypedBuf<sample> mOutBuf;
 
 	friend class NESting;
 };
